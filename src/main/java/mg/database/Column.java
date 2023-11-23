@@ -8,4 +8,5 @@ public class Column {
   private String type;
   private boolean isNullable;
   private String defaultValue;
+  private String comment;
 }

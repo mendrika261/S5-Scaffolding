@@ -53,7 +53,7 @@ public class ScClass {
 
   public LangData getLangData() {
     if (langData == null)
-      return LangData.getLangData(Utils.DATA_LANG_PATH + getJsonConfig());
+      setLangData(LangData.getLangData(Utils.DATA_LANG_PATH + getJsonConfig()));
     return langData;
   }
 

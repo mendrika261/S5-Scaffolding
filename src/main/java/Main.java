@@ -3,12 +3,11 @@ import java.util.List;
 import lombok.Cleanup;
 import mg.core.scaffolding.ScClass;
 import mg.database.Database;
-import mg.database.provider.Postgresql;
 import mg.database.Table;
 
 public class Main {
   public static void main(String[] args) throws Exception {
-    Database postgresql = new Postgresql();
+    Database postgresql = new Database();
 
     @Cleanup Connection connection = postgresql.getConnection();
 

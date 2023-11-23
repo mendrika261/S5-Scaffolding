@@ -7,9 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import lombok.extern.java.Log;
 import lombok.val;
-import mg.database.Database;
-import mg.database.provider.Postgresql;
-import mg.exception.UtilsException;
+import mg.exception.ScaffoldingException;
 
 @Log
 public class Utils {
@@ -24,7 +22,7 @@ public class Utils {
     try {
       return Files.readString(file.toPath());
     } catch (IOException ignored) {
-      throw new UtilsException("Error reading file: " + file.getAbsolutePath());
+      throw new ScaffoldingException("Error reading file: " + file.getAbsolutePath());
     }
   }
 
@@ -36,7 +34,7 @@ public class Utils {
     Dotenv dotenv = Dotenv.load();
     String value = dotenv.get(key);
     if (value == null) {
-      throw new UtilsException("Environment variable not set: " + key);
+      throw new ScaffoldingException("Environment variable not set: " + key);
     }
     return value;
   }
@@ -94,11 +92,11 @@ public class Utils {
     try {
       val file = new File(fileName);
       if (!file.getParentFile().exists() && !file.getParentFile().mkdirs())
-        throw new UtilsException("Error creating directories: " +
+        throw new ScaffoldingException("Error creating directories: " +
                                  file.getParentFile().getAbsolutePath());
       Files.writeString(file.toPath(), object.toString());
     } catch (IOException ignored) {
-      throw new UtilsException("Error writing file: " + fileName);
+      throw new ScaffoldingException("Error writing file: " + fileName);
     }
   }
 
