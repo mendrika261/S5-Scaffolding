@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class DbData {
-    Mapping[] mappings;
+  Mapping[] mappings;
 
-    public static DbData getDbData(String path) {
-        return Utils.readFileJson(path, DbData.class);
-    }
+  public static DbData getDbData(String path) {
+    return Utils.readFileJson(path, DbData.class);
+  }
 }
