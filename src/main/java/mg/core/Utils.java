@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import lombok.extern.java.Log;
 import lombok.val;
 import mg.database.Database;
+import mg.database.provider.Postgresql;
 import mg.exception.UtilsException;
 
 @Log
@@ -61,15 +62,6 @@ public class Utils {
     return value;
   }
 
-  public static Database getDBType() {
-    String dbType = getEnv("DB_TYPE");
-    if (dbType.equals("postgresql")) {
-      return new mg.database.Postgresql();
-    } else {
-      throw new UtilsException("Unknown database type: " + dbType);
-    }
-  }
-
   public static <T> T readFileJson(String path, Class<T> classMap) {
     Gson gson = new Gson();
     return gson.fromJson(readFile(path), classMap);
@@ -93,6 +85,11 @@ public class Utils {
     return stringBuilder.toString();
   }
 
+  public static String toCamelCase(String string, boolean firstUpper) {
+    String camelCase = toCamelCase(string);
+    return firstUpper? camelCase: camelCase.substring(0, 1).toLowerCase() + camelCase.substring(1);
+  }
+
   public static void writeFile(String fileName, Object object) {
     try {
       val file = new File(fileName);
@@ -103,5 +100,20 @@ public class Utils {
     } catch (IOException ignored) {
       throw new UtilsException("Error writing file: " + fileName);
     }
+  }
+
+    public static String getCorrectPath(String path) {
+      if (path == null || path.equals("."))
+        return "";
+      if (!path.isEmpty() && !path.endsWith("/"))
+        path += "/";
+      return path;
+    }
+
+  public static String getPackageFromPath(String path) {
+    path = getCorrectPath(path);
+    if (path.startsWith(WD_PATH))
+      path = path.substring(WD_PATH.length());
+    return path.replace("/", ".").substring(0, path.length() - 1);
   }
 }

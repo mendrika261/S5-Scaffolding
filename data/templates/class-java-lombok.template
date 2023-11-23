@@ -1,0 +1,13 @@
+$package #package#;
+
+import lombok.*;
+
+#imports#
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+$class #class# {
+#attributes#
+}

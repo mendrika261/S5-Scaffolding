@@ -1,9 +1,9 @@
 import java.sql.Connection;
 import java.util.List;
 import lombok.Cleanup;
-import mg.core.ScJava;
+import mg.core.scaffolding.ScClass;
 import mg.database.Database;
-import mg.database.Postgresql;
+import mg.database.provider.Postgresql;
 import mg.database.Table;
 
 public class Main {
@@ -14,6 +14,6 @@ public class Main {
 
     List<Table> tables = postgresql.getTables(connection);
 
-    new ScJava(tables.get(1), postgresql).generate("test", "class");
+    new ScClass("java", tables.get(1), postgresql).generate( "test/medar", "class", true);
   }
 }

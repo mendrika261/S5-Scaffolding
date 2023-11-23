@@ -1,8 +1,9 @@
-package mg.core;
+package mg.core.data;
 
 import java.util.HashMap;
 import java.util.List;
 import lombok.Data;
+import mg.core.Utils;
 
 @Data
 public class LangData {

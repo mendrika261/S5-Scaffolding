@@ -1,7 +1,10 @@
-#package#
+$package #package#;
 
 #imports#
 
 $class #class# {
 #attributes#
+
+    /* Getters and setters */
+#getters_and_setters#
 }

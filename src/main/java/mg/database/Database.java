@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import lombok.Data;
-import mg.core.DbData;
+import mg.core.data.DbData;
 import mg.core.Utils;
 
 @Data

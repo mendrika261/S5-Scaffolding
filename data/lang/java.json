@@ -1,13 +1,21 @@
 {
   "extension": ".java",
-  "preImported": ["java.lang.*"],
+  "preImported": ["java.lang"],
   "templates": {
-    "class": "class.template"
+    "class": "class.template",
+    "class_lombok": "class-java-lombok.template",
+    "entity": "entity.template"
   },
   "traductions": {
+    "{": "{",
+    "}": "}",
+    "end_line": ";",
     "package": "package",
     "import": "import",
+    "return": "return",
     "class": "class",
-    "public": "public"
+    "this": "this",
+    "public": "public",
+    "private": "private"
   }
 }

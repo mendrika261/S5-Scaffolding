@@ -1,4 +1,4 @@
-package mg.database;
+package mg.database.provider;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -7,6 +7,9 @@ import lombok.Cleanup;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.val;
+import mg.database.Column;
+import mg.database.Database;
+import mg.database.Table;
 import mg.exception.DatabaseException;
 
 @Data

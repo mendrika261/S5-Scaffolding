@@ -1,4 +1,4 @@
-package mg.core;
+package mg.core.data;
 
 import lombok.Data;
 
