@@ -1,0 +1,7 @@
+#package#
+
+#imports#
+
+$class #class# {
+#attributes#
+}
