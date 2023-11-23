@@ -127,10 +127,14 @@ public class ScClass {
     return evaluate(template).trim();
   }
 
-  public void generate(String path, String templateConversion, boolean withGettersAndSetters) {
-    setPackageName(Utils.getPackageFromPath(path));
+  public void generate(String path, String packageName, String templateConversion, boolean withGettersAndSetters) {
+    setPackageName(packageName);
     path = Utils.getCorrectPath(path);
     Utils.writeFile(path + getNameCamelCase() + getLangData().getExtension(),
                     convert(templateConversion, withGettersAndSetters));
+  }
+
+  public void generate(String path, String templateConversion, boolean withGettersAndSetters) {
+    generate(path, Utils.getPackageFromPath(path), templateConversion, withGettersAndSetters);
   }
 }
