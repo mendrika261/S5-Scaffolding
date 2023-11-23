@@ -1,0 +1,15 @@
+{
+  "extension": ".java",
+  "preImported": [
+    "java.lang.*"
+  ],
+  "templates": {
+    "class": "class.template"
+  },
+  "traductions": {
+    "package": "package",
+    "import": "import",
+    "class": "class",
+    "public": "public"
+  }
+}

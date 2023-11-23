@@ -1,0 +1,85 @@
+{
+  "mappings": [
+    {
+      "databaseType": ["double precision"],
+      "javaType": "java.lang.Double"
+    },
+    {
+      "databaseType": ["character varying", "text"],
+      "javaType": "java.lang.String"
+    },
+    {
+      "databaseType": ["integer", "int"],
+      "javaType": "java.lang.Integer"
+    },
+    {
+      "databaseType": ["bigint"],
+      "javaType": "java.lang.Long"
+    },
+    {
+      "databaseType": ["numeric", "decimal"],
+      "javaType": "java.math.BigDecimal"
+    },
+    {
+      "databaseType": ["timestamp with time zone", "timestamptz"],
+      "javaType": "java.time.ZonedDateTime"
+    },
+    {
+      "databaseType": ["timestamp without time zone", "timestamp"],
+      "javaType": "java.time.LocalDateTime"
+    },
+    {
+      "databaseType": ["date"],
+      "javaType": "java.time.LocalDate"
+    },
+    {
+      "databaseType": ["time with time zone", "timetz"],
+      "javaType": "java.time.OffsetTime"
+    },
+    {
+      "databaseType": ["time without time zone", "time"],
+      "javaType": "java.time.LocalTime"
+    },
+    {
+      "databaseType": ["interval"],
+      "javaType": "java.time.Period"
+    },
+    {
+      "databaseType": ["boolean"],
+      "javaType": "java.lang.Boolean"
+    },
+    {
+      "databaseType": ["bytea"],
+      "javaType": "byte[]"
+    },
+    {
+      "databaseType": ["uuid"],
+      "javaType": "java.util.UUID"
+    },
+    {
+      "databaseType": ["json"],
+      "javaType": "com.fasterxml.jackson.databind.JsonNode"
+    },
+    {
+      "databaseType": ["jsonb"],
+      "javaType": "com.fasterxml.jackson.databind.JsonNode",
+      "javaPackage": "com.fasterxml.jackson.databind"
+    },
+    {
+      "databaseType": ["integer[]"],
+      "javaType": "java.lang.Integer[]"
+    },
+    {
+      "databaseType": ["text[]"],
+      "javaType": "java.lang.String[]"
+    },
+    {
+      "databaseType": ["enum"],
+      "javaType": "java.lang.String"
+    },
+    {
+      "databaseType": ["custom"],
+      "javaType": "custom mapping"
+    }
+  ]
+}
