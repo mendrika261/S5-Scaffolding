@@ -2,47 +2,47 @@
   "mappings": [
     {
       "databaseType": ["INT", "SMALLINT", "MEDIUMINT", "TINYINT"],
-      "javaType": "java.lang.Integer"
+      "mappingType": "Integer"
     },
     {
       "databaseType": ["VARCHAR", "CHAR", "TEXT"],
-      "javaType": "java.lang.String"
+      "mappingType": "String"
     },
     {
       "databaseType": ["BIGINT"],
-      "javaType": "java.lang.Long"
+      "mappingType": "Long"
     },
     {
       "databaseType": ["FLOAT"],
-      "javaType": "java.lang.Float"
+      "mappingType": "Float"
     },
     {
       "databaseType": ["DOUBLE"],
-      "javaType": "java.lang.Double"
+      "mappingType": "Double"
     },
     {
       "databaseType": ["DECIMAL"],
-      "javaType": "java.math.BigDecimal"
+      "mappingType": "BigDecimal"
     },
     {
       "databaseType": ["DATE"],
-      "javaType": "java.time.LocalDate"
+      "mappingType": "LocalDate"
     },
     {
       "databaseType": ["TIME"],
-      "javaType": "java.time.LocalTime"
+      "mappingType": "LocalTime"
     },
     {
       "databaseType": ["DATETIME", "TIMESTAMP"],
-      "javaType": "java.util.LocalDateTime"
+      "mappingType": "LocalDateTime"
     },
     {
       "databaseType": ["TINYINT"],
-      "javaType": "java.lang.Byte"
+      "mappingType": "Byte"
     },
     {
       "databaseType": ["BIT"],
-      "javaType": "java.lang.Boolean"
+      "mappingType": "Boolean"
     }
   ]
 }

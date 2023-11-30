@@ -13,6 +13,6 @@ public class Main {
 
     List<Table> tables = postgresql.getTables(connection);
 
-    new ScClass("java", tables.get(1), postgresql).generate( "test/medar", "class", true);
+    new ScClass("java", tables.get(1), postgresql).generate( "src/main/java/test", "test", "class", true);
   }
 }

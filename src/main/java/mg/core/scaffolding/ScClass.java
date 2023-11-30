@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.val;
 import mg.core.Utils;
 import mg.core.data.LangData;
-import mg.core.data.Mapping;
 import mg.database.Database;
 import mg.database.Table;
 
@@ -27,18 +26,18 @@ public class ScClass {
     setLanguage(language);
 
     for (val column : table.getColumns()) {
-      val map = Mapping.getMappedType(column.getType(),
-                                      database.getDbData().getMappings());
-      ScAttribute scAttribute = new ScAttribute();
+      val map = database.getDbData().getMappedType(column.getType());
+      val langMap = getLangData().getMappedType(map.getMappingType());
+      val scAttribute = new ScAttribute();
       scAttribute.setName(column.getName());
-      scAttribute.setType(map);
-      scAttribute.setImportName(map.getName());
+      scAttribute.setType(langMap.getEquivalentType());
+      scAttribute.setImportName(langMap.getImportPackage());
       addAttributes(scAttribute);
     }
   }
 
   public void addImport(String importName) {
-    if (importName != null && !getImports().contains(importName))
+    if (importName != null && !importName.isEmpty() && !getImports().contains(importName))
       getImports().add(importName);
   }
 
@@ -64,7 +63,7 @@ public class ScClass {
   }
 
   public String attributeToCode(ScAttribute scAttribute) {
-    return "\t$private " + scAttribute.getType().getSimpleName() + " " + scAttribute.getNameCamelCase() + "$end_line\n";
+    return "\t$private " + scAttribute.getType() + " " + scAttribute.getNameCamelCase() + "$end_line\n";
   }
 
   public String importsToCode() {
@@ -82,15 +81,15 @@ public class ScClass {
     return attributes.toString();
   }
 
-    public String getterToCode(ScAttribute scAttribute) {
-        return "\t$public " + scAttribute.getType().getSimpleName() + " get" + scAttribute.getNameCamelCase(true) + "() ${\n" +
-             "\t\t$return " + scAttribute.getNameCamelCase() + "$end_line\n" +
-             "\t$}\n\n";
-    }
+  public String getterToCode(ScAttribute scAttribute) {
+    return "\t$public " + scAttribute.getType() + " " + scAttribute.getGetterName() + "() ${\n" +
+            "\t\t$return " + scAttribute.getNameCamelCase() + "$end_line\n" +
+            "\t$}\n\n";
+  }
 
     public String setterToCode(ScAttribute scAttribute) {
-        return "\t$public void set" + scAttribute.getNameCamelCase() + "(" + scAttribute.getType().getSimpleName() + " " + scAttribute.getNameCamelCase() + ") ${\n" +
-             "\t\t$this." + scAttribute.getNameCamelCase() + " = " + scAttribute.getNameCamelCase(true) + "$end_line\n" +
+      return "\t$public $void " + scAttribute.getSetterName() + "(" + scAttribute.getType() + " " + scAttribute.getNameCamelCase() + ") ${\n" +
+             "\t\t$this$." + scAttribute.getNameCamelCase() + " = " + scAttribute.getNameCamelCase() + "$end_line\n" +
              "\t$}\n\n";
     }
 

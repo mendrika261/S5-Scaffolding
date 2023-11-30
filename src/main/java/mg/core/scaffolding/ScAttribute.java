@@ -7,7 +7,14 @@ import mg.core.Utils;
 public class ScAttribute {
   private String importName;
   private String name;
-  private Class<?> type;
+  private String type;
+
+  public String getName() {
+    if(getType().equals("boolean"))
+      if(name.startsWith("is"))
+        return name.substring(2);
+    return name;
+  }
 
   public String getNameCamelCase(boolean firstUpper) {
     return Utils.toCamelCase(getName(), firstUpper);
@@ -17,4 +24,13 @@ public class ScAttribute {
     return getNameCamelCase(false);
   }
 
+  public String getGetterName() {
+    if (getType().equalsIgnoreCase("boolean"))
+      return "is" + getNameCamelCase(true);
+    return "get" + getNameCamelCase(true);
+  }
+
+  public String getSetterName() {
+    return "set" + getNameCamelCase(true);
+  }
 }

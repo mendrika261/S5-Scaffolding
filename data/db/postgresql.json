@@ -2,67 +2,55 @@
   "mappings": [
     {
       "databaseType": ["varchar"],
-      "javaType": "java.lang.String"
+      "mappingType": "String"
     },
     {
-      "databaseType": ["int8"],
-      "javaType": "java.lang.Integer"
-    },
-    {
-      "databaseType": ["int4"],
-      "javaType": "java.lang.Integer"
-    },
-    {
-      "databaseType": ["int2"],
-      "javaType": "java.lang.Integer"
+      "databaseType": ["int8", "int4", "int2"],
+      "mappingType": "Integer"
     },
     {
       "databaseType": ["numeric"],
-      "javaType": "java.math.BigDecimal"
+      "mappingType": "BigDecimal"
     },
     {
-      "databaseType": ["float4"],
-      "javaType": "java.lang.Float"
-    },
-    {
-      "databaseType": ["float8"],
-      "javaType": "java.lang.Double"
+      "databaseType": ["float4", "float8"],
+      "mappingType": "Float"
     },
     {
       "databaseType": ["bool"],
-      "javaType": "java.lang.Boolean"
+      "mappingType": "Boolean"
     },
     {
       "databaseType": ["date"],
-      "javaType": "java.time.LocalDate"
+      "mappingType": "LocalDate"
     },
     {
       "databaseType": ["time"],
-      "javaType": "java.time.LocalTime"
+      "mappingType": "LocalTime"
     },
     {
       "databaseType": ["timestamp"],
-      "javaType": "java.time.LocalDateTime"
+      "mappingType": "LocalDateTime"
     },
     {
       "databaseType": ["timestamptz"],
-      "javaType": "java.time.OffsetDateTime"
+      "mappingType": "OffsetDateTime"
     },
     {
       "databaseType": ["bytea"],
-      "javaType": "byte[]"
+      "mappingType": "byte[]"
     },
     {
       "databaseType": ["json"],
-      "javaType": "java.lang.String"
+      "mappingType": "String"
     },
     {
       "databaseType": ["jsonb"],
-      "javaType": "java.lang.String"
+      "mappingType": "String"
     },
     {
       "databaseType": ["uuid"],
-      "javaType": "java.util.UUID"
+      "mappingType": "UUID"
     }
   ]
 }

@@ -11,6 +11,7 @@ public class LangData {
   private List<String> preImported;
   private HashMap<String, String> templates;
   private HashMap<String, String> traductions;
+  private List<LangMapping> mappings;
 
   public static LangData getLangData(String path) {
     return Utils.readFileJson(path, LangData.class);
@@ -26,5 +27,14 @@ public class LangData {
     if (getTemplates().containsKey(key))
       return getTemplates().get(key);
     throw new RuntimeException("Template not found for key: " + key);
+  }
+
+  public LangMapping getMappedType(String map) {
+    for(LangMapping langMapping:getMappings()) {
+      if(langMapping.getMappingType().equalsIgnoreCase(map)) {
+        return langMapping;
+      }
+    }
+    throw new RuntimeException("Langage map type not found for: "+map);
   }
 }

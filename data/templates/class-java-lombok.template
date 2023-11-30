@@ -1,13 +1,10 @@
-$package #package#;
+$package #package#$end_line
 
 import lombok.*;
 
 #imports#
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-$class #class# {
+@Data
+$class #class# ${
 #attributes#
-}
+$}
