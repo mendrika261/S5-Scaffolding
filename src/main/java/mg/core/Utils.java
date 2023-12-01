@@ -5,6 +5,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+
 import lombok.extern.java.Log;
 import lombok.val;
 import mg.exception.ScaffoldingException;
@@ -31,7 +32,7 @@ public class Utils {
   }
 
   public static String getEnv(String key) {
-    Dotenv dotenv = Dotenv.load();
+    Dotenv dotenv = Dotenv.configure().systemProperties().directory(WD_PATH).load();
     String value = dotenv.get(key);
     if (value == null) {
       throw new ScaffoldingException("Environment variable not set: " + key);
@@ -40,7 +41,7 @@ public class Utils {
   }
 
   public static String getEnv(String key, String defaultValue) {
-    Dotenv dotenv = Dotenv.load();
+    Dotenv dotenv = Dotenv.configure().systemProperties().directory(WD_PATH).load();
     String value = dotenv.get(key);
     if (value == null) {
       return defaultValue;
@@ -91,7 +92,7 @@ public class Utils {
   public static void writeFile(String fileName, Object object) {
     try {
       val file = new File(fileName);
-      if (!file.getParentFile().exists() && !file.getParentFile().mkdirs())
+      if (file.getParentFile() != null && !file.getParentFile().exists() && !file.getParentFile().mkdirs())
         throw new ScaffoldingException("Error creating directories: " +
                                  file.getParentFile().getAbsolutePath());
       Files.writeString(file.toPath(), object.toString());
@@ -109,9 +110,66 @@ public class Utils {
     }
 
   public static String getPackageFromPath(String path) {
+    if(path == null || path.isEmpty())
+      return "";
     path = getCorrectPath(path);
     if (path.startsWith(WD_PATH))
       path = path.substring(WD_PATH.length());
     return path.replace("/", ".").substring(0, path.length() - 1);
+  }
+
+    public static String[] getAvailableLanguages() {
+      File[] files = new File(DATA_LANG_PATH).listFiles();
+      if (files == null)
+        throw new ScaffoldingException("Error getting available languages");
+      String[] languages = new String[files.length];
+      for (int i = 0; i < files.length; i++) {
+        languages[i] = files[i].getName().replace(".json", "");
+      }
+      return languages;
+    }
+
+  public static void checkIfPathIsWritable(String path) {
+    if (path == null)
+      throw new ScaffoldingException("Path cannot be empty");
+    if (path.startsWith(WD_PATH))
+      path = path.substring(WD_PATH.length());
+    if (path.endsWith("/"))
+      path = path.substring(0, path.length() - 1);
+    String[] directories = path.split("/");
+    String currentPath = WD_PATH;
+    for (String directory : directories) {
+      currentPath += directory + "/";
+      File file = new File(currentPath);
+      if (file.exists() && !file.isDirectory())
+        throw new ScaffoldingException("Path is not a directory: " + currentPath);
+      if (!file.exists() && !file.mkdir())
+        throw new ScaffoldingException("Error creating directory: " + currentPath);
+      file.delete();
+    }
+  }
+
+  public static void checkIfPackageNameIsValid(String packageName) {
+    if(packageName == null || packageName.isEmpty()) return;
+    if (packageName.startsWith("."))
+      packageName = packageName.substring(1);
+    if (packageName.endsWith("."))
+      packageName = packageName.substring(0, packageName.length() - 1);
+    String[] directories = packageName.split("\\.");
+    for (String directory : directories) {
+      if (!directory.matches("[a-z][a-z0-9]*"))
+        throw new ScaffoldingException("Invalid package name: " + packageName);
+    }
+  }
+
+  public static String[] getAvailableTemplates() {
+    File[] files = new File(DATA_TEMPLATES_PATH).listFiles();
+    if (files == null)
+      throw new ScaffoldingException("Error getting available templates");
+    String[] templates = new String[files.length];
+    for (int i = 0; i < files.length; i++) {
+      templates[i] = files[i].getName().replace(".template", "");
+    }
+    return templates;
   }
 }

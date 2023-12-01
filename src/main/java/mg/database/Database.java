@@ -9,7 +9,9 @@ import lombok.Data;
 import lombok.val;
 import mg.core.data.DbData;
 import mg.core.Utils;
+import mg.core.scaffolding.ScClass;
 import mg.exception.DatabaseException;
+import mg.exception.ScaffoldingException;
 
 @Data
 public class Database {
@@ -90,5 +92,31 @@ public class Database {
     } catch (SQLException e) {
       throw new DatabaseException("Error getting table: " + e.getMessage());
     }
+  }
+
+  public void generateClass(String langage, Table table, String path, String packageName, String template, boolean gettersSetters) {
+    new ScClass(langage, table, this).generate(path, packageName, template, gettersSetters);
+  }
+
+  public void generateClass(String langage, Table table, String path, String template, boolean gettersSetters) {
+    generateClass(langage, table, path, path, template, gettersSetters);
+  }
+
+  public void generateClass(String langage, String path, String packageName, String template, boolean gettersSetters) {
+    try {
+      @Cleanup val connection = getConnection();
+      for (Table table: getTables(connection))
+        try {
+          generateClass(langage, table, path, packageName, template, gettersSetters);
+        } catch (Exception e) {
+          throw new ScaffoldingException("Error generating class for table " + table.getName() + ": " + e.getMessage());
+        }
+    } catch (SQLException e) {
+      throw new DatabaseException("Error getting connection from the database: " + e.getMessage());
+    }
+  }
+
+  public void generateClass(String langage, String path, String template, boolean gettersSetters) {
+    generateClass(langage, path, path, template, gettersSetters);
   }
 }

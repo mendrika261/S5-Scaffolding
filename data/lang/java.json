@@ -65,7 +65,7 @@
     {
       "mappingType": "LocalDateTime",
       "equivalentType": "LocalDateTime",
-      "importPackage": "java.util.LocalDateTime"
+      "importPackage": "java.time.LocalDateTime"
     },
     {
       "mappingType": "Byte",

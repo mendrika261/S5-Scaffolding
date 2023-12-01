@@ -102,6 +102,12 @@ public class ScClass {
     return gettersAndSetters.toString();
   }
 
+  private String packageToCode() {
+    if (getPackageName() == null || getPackageName().isEmpty())
+      return "";
+    return "$package " + getPackageName() + "$end_line\n\n";
+  }
+
   public String evaluate(String template) {
     for (val toTranslate : getLangData().getTraductions().keySet()) {
       template = template.replace("$" + toTranslate,
@@ -115,9 +121,7 @@ public class ScClass {
         Utils.readFile(Utils.DATA_TEMPLATES_PATH +
                        getLangData().getTemplate(templateConversion));
 
-    template = template.replace(
-            "#package#",
-            getPackageName() == null ? "" : getPackageName());
+    template = template.replace("#package#", packageToCode());
     template = template.replace("#imports#", importsToCode());
     template = template.replace("#class#", getNameCamelCase());
     template = template.replace("#attributes#", attributesToCode());
