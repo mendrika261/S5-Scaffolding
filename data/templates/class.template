@@ -2,6 +2,9 @@
 
 #imports#
 
-$class #class# {
+$class #class# ${
 #attributes#
-}
+
+    $/* Getters and setters $*/
+#getters_and_setters#
+$}

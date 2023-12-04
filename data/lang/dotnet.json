@@ -1,9 +1,10 @@
 {
-  "extension": ".java",
-  "preImported": ["java.lang"],
+  "extension": ".cs",
+  "preImported": [
+    "System"
+  ],
   "templates": {
-    "class": "class.template",
-    "class_lombok": "class-java-lombok.template"
+    "class": "class.template"
   },
   "traductions": {
     "{": "{",
@@ -12,8 +13,8 @@
     ".": ".",
     "/*": "/*",
     "*/": "*/",
-    "package": "package",
-    "import": "import",
+    "package": "namespace",
+    "import": "use",
     "return": "return",
     "class": "class",
     "this": "this",
@@ -25,57 +26,57 @@
     {
       "mappingType": "Integer",
       "equivalentType": "int",
-      "importPackage": ""
+      "importNamespace": ""
     },
     {
       "mappingType": "String",
-      "equivalentType": "String",
-      "importPackage": "java.lang.String"
+      "equivalentType": "string",
+      "importNamespace": ""
     },
     {
       "mappingType": "Long",
       "equivalentType": "long",
-      "importPackage": ""
+      "importNamespace": ""
     },
     {
       "mappingType": "Float",
       "equivalentType": "float",
-      "importPackage": ""
+      "importNamespace": ""
     },
     {
       "mappingType": "Double",
       "equivalentType": "double",
-      "importPackage": ""
+      "importNamespace": ""
     },
     {
       "mappingType": "BigDecimal",
-      "equivalentType": "BigDecimal",
-      "importPackage": "java.math.BigDecimal"
+      "equivalentType": "decimal",
+      "importNamespace": "System"
     },
     {
       "mappingType": "LocalDate",
-      "equivalentType": "LocalDate",
-      "importPackage": "java.time.LocalDate"
+      "equivalentType": "DateTime",
+      "importNamespace": "System"
     },
     {
       "mappingType": "LocalTime",
-      "equivalentType": "LocalTime",
-      "importPackage": "java.time.LocalTime"
+      "equivalentType": "DateTime",
+      "importNamespace": "System"
     },
     {
       "mappingType": "LocalDateTime",
-      "equivalentType": "LocalDateTime",
-      "importPackage": "java.time.LocalDateTime"
+      "equivalentType": "DateTime",
+      "importNamespace": "System"
     },
     {
       "mappingType": "Byte",
       "equivalentType": "byte",
-      "importPackage": ""
+      "importNamespace": ""
     },
     {
       "mappingType": "Boolean",
-      "equivalentType": "boolean",
-      "importPackage": ""
+      "equivalentType": "bool",
+      "importNamespace": ""
     }
   ]
 }

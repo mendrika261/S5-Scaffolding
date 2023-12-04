@@ -1,85 +1,56 @@
 {
   "mappings": [
     {
-      "databaseType": ["double precision"],
-      "javaType": "java.lang.Double"
+      "databaseType": ["varchar"],
+      "mappingType": "String"
     },
     {
-      "databaseType": ["character varying", "text"],
-      "javaType": "java.lang.String"
+      "databaseType": ["int8", "int4", "int2"],
+      "mappingType": "Integer"
     },
     {
-      "databaseType": ["integer", "int"],
-      "javaType": "java.lang.Integer"
+      "databaseType": ["numeric"],
+      "mappingType": "BigDecimal"
     },
     {
-      "databaseType": ["bigint"],
-      "javaType": "java.lang.Long"
+      "databaseType": ["float4", "float8"],
+      "mappingType": "Float"
     },
     {
-      "databaseType": ["numeric", "decimal"],
-      "javaType": "java.math.BigDecimal"
-    },
-    {
-      "databaseType": ["timestamp with time zone", "timestamptz"],
-      "javaType": "java.time.ZonedDateTime"
-    },
-    {
-      "databaseType": ["timestamp without time zone", "timestamp"],
-      "javaType": "java.time.LocalDateTime"
+      "databaseType": ["bool"],
+      "mappingType": "Boolean"
     },
     {
       "databaseType": ["date"],
-      "javaType": "java.time.LocalDate"
+      "mappingType": "LocalDate"
     },
     {
-      "databaseType": ["time with time zone", "timetz"],
-      "javaType": "java.time.OffsetTime"
+      "databaseType": ["time"],
+      "mappingType": "LocalTime"
     },
     {
-      "databaseType": ["time without time zone", "time"],
-      "javaType": "java.time.LocalTime"
+      "databaseType": ["timestamp"],
+      "mappingType": "LocalDateTime"
     },
     {
-      "databaseType": ["interval"],
-      "javaType": "java.time.Period"
-    },
-    {
-      "databaseType": ["boolean"],
-      "javaType": "java.lang.Boolean"
+      "databaseType": ["timestamptz"],
+      "mappingType": "OffsetDateTime"
     },
     {
       "databaseType": ["bytea"],
-      "javaType": "byte[]"
-    },
-    {
-      "databaseType": ["uuid"],
-      "javaType": "java.util.UUID"
+      "mappingType": "byte[]"
     },
     {
       "databaseType": ["json"],
-      "javaType": "com.fasterxml.jackson.databind.JsonNode"
+      "mappingType": "String"
     },
     {
       "databaseType": ["jsonb"],
-      "javaType": "com.fasterxml.jackson.databind.JsonNode",
-      "javaPackage": "com.fasterxml.jackson.databind"
+      "mappingType": "String"
     },
     {
-      "databaseType": ["integer[]"],
-      "javaType": "java.lang.Integer[]"
-    },
-    {
-      "databaseType": ["text[]"],
-      "javaType": "java.lang.String[]"
-    },
-    {
-      "databaseType": ["enum"],
-      "javaType": "java.lang.String"
-    },
-    {
-      "databaseType": ["custom"],
-      "javaType": "custom mapping"
+      "databaseType": ["uuid"],
+      "mappingType": "UUID"
     }
   ]
 }

@@ -1,7 +1,7 @@
 package mg.exception;
 
-public class UtilsException extends RuntimeException {
-  public UtilsException(String message) {
+public class ScaffoldingException extends RuntimeException {
+  public ScaffoldingException(String message) {
     super(message);
     // remove stack trace
     setStackTrace(new StackTraceElement[0]);
