@@ -1,47 +1,75 @@
 {
   "mappings": [
     {
-      "databaseType": ["INT", "SMALLINT", "MEDIUMINT", "TINYINT"],
+      "databaseType": [
+        "INT",
+        "SMALLINT",
+        "MEDIUMINT",
+        "TINYINT"
+      ],
       "mappingType": "Integer"
     },
     {
-      "databaseType": ["VARCHAR", "CHAR", "TEXT"],
+      "databaseType": [
+        "VARCHAR",
+        "CHAR",
+        "TEXT"
+      ],
       "mappingType": "String"
     },
     {
-      "databaseType": ["BIGINT"],
+      "databaseType": [
+        "BIGINT"
+      ],
       "mappingType": "Long"
     },
     {
-      "databaseType": ["FLOAT"],
+      "databaseType": [
+        "FLOAT"
+      ],
       "mappingType": "Float"
     },
     {
-      "databaseType": ["DOUBLE"],
+      "databaseType": [
+        "DOUBLE"
+      ],
       "mappingType": "Double"
     },
     {
-      "databaseType": ["DECIMAL"],
+      "databaseType": [
+        "DECIMAL"
+      ],
       "mappingType": "BigDecimal"
     },
     {
-      "databaseType": ["DATE"],
+      "databaseType": [
+        "DATE"
+      ],
       "mappingType": "LocalDate"
     },
     {
-      "databaseType": ["TIME"],
+      "databaseType": [
+        "TIME"
+      ],
       "mappingType": "LocalTime"
     },
     {
-      "databaseType": ["DATETIME", "TIMESTAMP"],
+      "databaseType": [
+        "DATETIME",
+        "TIMESTAMP"
+      ],
       "mappingType": "LocalDateTime"
     },
     {
-      "databaseType": ["TINYINT"],
+      "databaseType": [
+        "TINYINT"
+      ],
       "mappingType": "Byte"
     },
     {
-      "databaseType": ["BIT"],
+      "databaseType": [
+        "BIT"
+      ],
       "mappingType": "Boolean"
     }
   ]

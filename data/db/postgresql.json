@@ -1,55 +1,84 @@
 {
   "mappings": [
     {
-      "databaseType": ["varchar"],
+      "databaseType": [
+        "varchar"
+      ],
       "mappingType": "String"
     },
     {
-      "databaseType": ["int8", "int4", "int2"],
+      "databaseType": [
+        "int8",
+        "int4",
+        "int2"
+      ],
       "mappingType": "Integer"
     },
     {
-      "databaseType": ["numeric"],
+      "databaseType": [
+        "numeric"
+      ],
       "mappingType": "BigDecimal"
     },
     {
-      "databaseType": ["float4", "float8"],
+      "databaseType": [
+        "float4",
+        "float8"
+      ],
       "mappingType": "Float"
     },
     {
-      "databaseType": ["bool"],
+      "databaseType": [
+        "bool"
+      ],
       "mappingType": "Boolean"
     },
     {
-      "databaseType": ["date"],
+      "databaseType": [
+        "date"
+      ],
       "mappingType": "LocalDate"
     },
     {
-      "databaseType": ["time"],
+      "databaseType": [
+        "time"
+      ],
       "mappingType": "LocalTime"
     },
     {
-      "databaseType": ["timestamp"],
+      "databaseType": [
+        "timestamp"
+      ],
       "mappingType": "LocalDateTime"
     },
     {
-      "databaseType": ["timestamptz"],
+      "databaseType": [
+        "timestamptz"
+      ],
       "mappingType": "OffsetDateTime"
     },
     {
-      "databaseType": ["bytea"],
+      "databaseType": [
+        "bytea"
+      ],
       "mappingType": "byte[]"
     },
     {
-      "databaseType": ["json"],
+      "databaseType": [
+        "json"
+      ],
       "mappingType": "String"
     },
     {
-      "databaseType": ["jsonb"],
+      "databaseType": [
+        "jsonb"
+      ],
       "mappingType": "String"
     },
     {
-      "databaseType": ["uuid"],
+      "databaseType": [
+        "uuid"
+      ],
       "mappingType": "UUID"
     }
   ]
