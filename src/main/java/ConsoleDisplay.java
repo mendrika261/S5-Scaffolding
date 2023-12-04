@@ -26,7 +26,7 @@ public class ConsoleDisplay {
       connection = database.getConnection();
     } catch (Exception e) {
       System.out.println(COLOR_RED + "Connection to database failed 😕: " + e.getMessage() + COLOR_RESET);
-      System.exit(0);
+      System.exit(1);
     }
 
 
@@ -43,6 +43,7 @@ public class ConsoleDisplay {
       connection.close();
     } catch (Exception e) {
       System.out.println(COLOR_RED + "Error 😕: " + e.getMessage() + COLOR_RESET);
+      main(args);
     }
 
     scanner.close();
