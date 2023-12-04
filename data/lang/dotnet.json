@@ -1,8 +1,6 @@
 {
   "extension": ".cs",
-  "preImported": [
-    "System"
-  ],
+  "preImported": ["System"],
   "templates": {
     "class": "class.template"
   },

@@ -1,8 +1,6 @@
 {
   "extension": ".java",
-  "preImported": [
-    "java.lang"
-  ],
+  "preImported": ["java.lang"],
   "templates": {
     "class": "class.template",
     "class_lombok": "class-java-lombok.template"
