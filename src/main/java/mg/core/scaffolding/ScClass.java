@@ -30,7 +30,8 @@ public class ScClass {
       val langMap = getLangData().getMappedType(map.getMappingType());
       val scAttribute = new ScAttribute();
       scAttribute.setName(column.getName());
-      scAttribute.setType(langMap.getEquivalentType());
+      scAttribute.setLangType(langMap.getEquivalentType());
+      scAttribute.setMappingType(map.getMappingType());
       scAttribute.setImportName(langMap.getImportPackage());
       addAttributes(scAttribute);
     }
@@ -63,7 +64,7 @@ public class ScClass {
   }
 
   public String attributeToCode(ScAttribute scAttribute) {
-    return "\t$private " + scAttribute.getType() + " " + scAttribute.getNameCamelCase() + "$end_line\n";
+    return "\t$private " + scAttribute.getLangType() + " " + scAttribute.getNameCamelCase() + "$end_line\n";
   }
 
   public String importsToCode() {
@@ -82,13 +83,13 @@ public class ScClass {
   }
 
   public String getterToCode(ScAttribute scAttribute) {
-    return "\t$public " + scAttribute.getType() + " " + scAttribute.getGetterName() + "() ${\n" +
+    return "\t$public " + scAttribute.getLangType() + " " + scAttribute.getGetterName() + "() ${\n" +
             "\t\t$return " + scAttribute.getNameCamelCase() + "$end_line\n" +
             "\t$}\n\n";
   }
 
     public String setterToCode(ScAttribute scAttribute) {
-      return "\t$public $void " + scAttribute.getSetterName() + "(" + scAttribute.getType() + " " + scAttribute.getNameCamelCase() + ") ${\n" +
+      return "\t$public $void " + scAttribute.getSetterName() + "(" + scAttribute.getLangType() + " " + scAttribute.getNameCamelCase() + ") ${\n" +
              "\t\t$this$." + scAttribute.getNameCamelCase() + " = " + scAttribute.getNameCamelCase() + "$end_line\n" +
              "\t$}\n\n";
     }

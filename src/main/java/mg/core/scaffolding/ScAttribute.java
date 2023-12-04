@@ -7,10 +7,12 @@ import mg.core.Utils;
 public class ScAttribute {
   private String importName;
   private String name;
-  private String type;
+  private String langType;
+  private String mappingType;
 
   public String getName() {
-    if(getType().equals("boolean"))
+    System.out.println(getLangType());
+    if(getLangType().startsWith("bool"))
       if(name.startsWith("is"))
         return name.substring(2);
     return name;
@@ -25,7 +27,7 @@ public class ScAttribute {
   }
 
   public String getGetterName() {
-    if (getType().equalsIgnoreCase("boolean"))
+    if (getMappingType().equalsIgnoreCase("boolean"))
       return "is" + getNameCamelCase(true);
     return "get" + getNameCamelCase(true);
   }
