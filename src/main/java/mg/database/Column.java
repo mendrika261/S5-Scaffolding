@@ -1,6 +1,5 @@
 package mg.database;
 
-
 public class Column {
   private String name;
   private String type;
@@ -9,48 +8,28 @@ public class Column {
   private String comment;
 
   // Constructors
-  public Column() {
-  }
-
+  public Column() {}
 
   // Getters and Setters
-  public String getName() {
-    return name;
-  }
+  public String getName() { return name; }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+  public void setName(String name) { this.name = name; }
 
-  public String getType() {
-    return type;
-  }
+  public String getType() { return type; }
 
-  public void setType(String type) {
-    this.type = type;
-  }
+  public void setType(String type) { this.type = type; }
 
-  public boolean isNullable() {
-    return isNullable;
-  }
+  public boolean isNullable() { return isNullable; }
 
-  public void setNullable(boolean nullable) {
-    isNullable = nullable;
-  }
+  public void setNullable(boolean nullable) { isNullable = nullable; }
 
-  public String getDefaultValue() {
-    return defaultValue;
-  }
+  public String getDefaultValue() { return defaultValue; }
 
   public void setDefaultValue(String defaultValue) {
     this.defaultValue = defaultValue;
   }
 
-  public String getComment() {
-    return comment;
-  }
+  public String getComment() { return comment; }
 
-  public void setComment(String comment) {
-    this.comment = comment;
-  }
+  public void setComment(String comment) { this.comment = comment; }
 }

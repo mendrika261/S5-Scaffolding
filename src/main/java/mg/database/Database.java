@@ -3,13 +3,11 @@ package mg.database;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import mg.core.data.DbData;
 import mg.core.Utils;
+import mg.core.data.DbData;
 import mg.core.scaffolding.ScClass;
 import mg.exception.DatabaseException;
 import mg.exception.ScaffoldingException;
-
 
 public class Database {
   public final String URL = Utils.getEnv("DB_URL");
@@ -20,11 +18,8 @@ public class Database {
   public String jsonConfig;
   private DbData dbData;
 
-
   // Constructors
-  public Database() {
-  }
-
+  public Database() {}
 
   // Methods
   public String getJsonConfig() {
@@ -32,7 +27,8 @@ public class Database {
       try {
         setJsonConfig(URL.split(":")[1] + ".json");
       } catch (Exception e) {
-        throw new DatabaseException("Error getting json config: " + e.getMessage());
+        throw new DatabaseException("Error getting json config: " +
+                                    e.getMessage());
       }
     return jsonConfig;
   }
@@ -55,18 +51,20 @@ public class Database {
       throw new DatabaseException("Error loading driver: " + DRIVER);
     } catch (SQLException e) {
       throw new DatabaseException("Error connecting to database: " +
-              e.getMessage());
+                                  e.getMessage());
     }
   }
 
   public List<Table> getTables(Connection connection) {
     try {
       final DatabaseMetaData databaseMetaData = connection.getMetaData();
-      final ResultSet resultSet = databaseMetaData.getTables(null, SCHEMA, null, new String[]{"TABLE", "VIEW"});
+      final ResultSet resultSet = databaseMetaData.getTables(
+          null, SCHEMA, null, new String[] {"TABLE", "VIEW"});
       final List<Table> tables = new ArrayList<>();
 
       while (resultSet.next()) {
-        final Table table = getTable(resultSet.getString("TABLE_NAME"), connection);
+        final Table table =
+            getTable(resultSet.getString("TABLE_NAME"), connection);
         table.setMutable(resultSet.getString("TABLE_TYPE").equals("TABLE"));
         tables.add(table);
       }
@@ -84,7 +82,8 @@ public class Database {
     List<Column> columns = new ArrayList<>();
 
     try {
-      ResultSet resultSet = connection.getMetaData().getColumns(null, SCHEMA, name, null);
+      ResultSet resultSet =
+          connection.getMetaData().getColumns(null, SCHEMA, name, null);
       while (resultSet.next()) {
         Column column = new Column();
         column.setName(resultSet.getString("COLUMN_NAME"));
@@ -102,54 +101,63 @@ public class Database {
     }
   }
 
-  public void generateClass(String langage, Table table, String path, String packageName, String template, boolean gettersSetters) {
-    new ScClass(langage, table, this).generate(path, packageName, template, gettersSetters);
+  public void generateClass(String langage, Table table, String path,
+                            String packageName, String template,
+                            boolean gettersSetters) {
+    new ScClass(langage, table, this)
+        .generate(path, packageName, template, gettersSetters);
   }
 
-  public void generateClass(String langage, Table table, String path, String template, boolean gettersSetters) {
+  public void generateClass(String langage, Table table, String path,
+                            String template, boolean gettersSetters) {
     generateClass(langage, table, path, path, template, gettersSetters);
   }
 
-  public void generateClass(String langage, String path, String packageName, String template, boolean gettersSetters) {
+  public void generateClass(String langage, String path, String packageName,
+                            String template, boolean gettersSetters) {
     try {
       Connection connection = getConnection();
-      generateClass(langage, path, packageName, template, gettersSetters, connection);
+      generateClass(langage, path, packageName, template, gettersSetters,
+                    connection);
       connection.close();
     } catch (SQLException e) {
-      throw new DatabaseException("Error getting connection from the database: " + e.getMessage());
+      throw new DatabaseException(
+          "Error getting connection from the database: " + e.getMessage());
     }
   }
 
-  public void generateClass(String langage, String path, String packageName, String template, boolean gettersSetters, Connection connection) {
-    for (Table table: getTables(connection))
+  public void generateClass(String langage, String path, String packageName,
+                            String template, boolean gettersSetters,
+                            Connection connection) {
+    for (Table table : getTables(connection))
       try {
-        generateClass(langage, table, path, packageName, template, gettersSetters);
+        generateClass(langage, table, path, packageName, template,
+                      gettersSetters);
       } catch (Exception e) {
-        throw new ScaffoldingException("Error generating class for table " + table.getName() + ": " + e.getMessage());
+        throw new ScaffoldingException("Error generating class for table " +
+                                       table.getName() + ": " + e.getMessage());
       }
   }
 
-  public void generateClass(String langage, String path, String template, boolean gettersSetters) {
+  public void generateClass(String langage, String path, String template,
+                            boolean gettersSetters) {
     try {
       Connection connection = getConnection();
       generateClass(langage, path, path, template, gettersSetters, connection);
       connection.close();
     } catch (SQLException e) {
-      throw new DatabaseException("Error getting connection from the database: " + e.getMessage());
+      throw new DatabaseException(
+          "Error getting connection from the database: " + e.getMessage());
     }
   }
 
-  public void generateClass(String langage, String path, String template, boolean gettersSetters, Connection connection) {
+  public void generateClass(String langage, String path, String template,
+                            boolean gettersSetters, Connection connection) {
     generateClass(langage, path, path, template, gettersSetters, connection);
   }
 
-
   // Getters and Setters
-  public void setJsonConfig(String jsonConfig) {
-    this.jsonConfig = jsonConfig;
-  }
+  public void setJsonConfig(String jsonConfig) { this.jsonConfig = jsonConfig; }
 
-  public void setDbData(DbData dbData) {
-    this.dbData = dbData;
-  }
+  public void setDbData(DbData dbData) { this.dbData = dbData; }
 }

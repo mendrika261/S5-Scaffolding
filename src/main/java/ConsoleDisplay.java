@@ -1,8 +1,7 @@
-import mg.core.Utils;
-import mg.database.Database;
-
 import java.sql.Connection;
 import java.util.Scanner;
+import mg.core.Utils;
+import mg.database.Database;
 
 public class ConsoleDisplay {
   public final static String COLOR_RED = "\u001B[31m";
@@ -25,10 +24,10 @@ public class ConsoleDisplay {
     try {
       connection = database.getConnection();
     } catch (Exception e) {
-      System.out.println(COLOR_RED + "Connection to database failed 😕: " + e.getMessage() + COLOR_RESET);
+      System.out.println(COLOR_RED + "Connection to database failed 😕: " +
+                         e.getMessage() + COLOR_RESET);
       System.exit(1);
     }
-
 
     try {
       String langage = askForLangage(scanner);
@@ -37,12 +36,14 @@ public class ConsoleDisplay {
       String template = askForTemplate(scanner);
 
       System.out.println(COLOR_YELLOW + "Processing..." + COLOR_RESET);
-      database.generateClass(langage, path, packageName, template, true, connection);
+      database.generateClass(langage, path, packageName, template, true,
+                             connection);
       System.out.println(COLOR_GREEN + "Done!" + COLOR_RESET);
 
       connection.close();
     } catch (Exception e) {
-      System.out.println(COLOR_RED + "Error 😕: " + e.getMessage() + COLOR_RESET);
+      System.out.println(COLOR_RED + "Error 😕: " + e.getMessage() +
+                         COLOR_RESET);
       main(args);
     }
 
@@ -77,10 +78,11 @@ public class ConsoleDisplay {
 
     String[] availableLanguages = Utils.getAvailableLanguages();
     for (int i = 0; i < availableLanguages.length; i++) {
-      System.out.println((i + 1) + ". " + Utils.toCamelCase(availableLanguages[i], true));
+      System.out.println((i + 1) + ". " +
+                         Utils.toCamelCase(availableLanguages[i], true));
     }
 
-    System.out.print(COLOR_CYAN + "Enter the number: "+ COLOR_RESET);
+    System.out.print(COLOR_CYAN + "Enter the number: " + COLOR_RESET);
     try {
       int languageNumber = Integer.parseInt(scanner.nextLine());
       System.out.println();
@@ -98,10 +100,13 @@ public class ConsoleDisplay {
     System.out.println("Where do you want to generate the class?");
     System.out.println(COLOR_RESET);
 
-    System.out.print(COLOR_CYAN + "Enter the path (leave blank for current directory): "+ COLOR_RESET);
+    System.out.print(
+        COLOR_CYAN +
+        "Enter the path (leave blank for current directory): " + COLOR_RESET);
     String path = scanner.nextLine();
     try {
-      System.out.println(COLOR_YELLOW + "Checking if path is writable..." + COLOR_RESET);
+      System.out.println(COLOR_YELLOW + "Checking if path is writable..." +
+                         COLOR_RESET);
       Utils.checkIfPathIsWritable(path);
     } catch (Exception e) {
       clearScreen();
@@ -118,12 +123,16 @@ public class ConsoleDisplay {
     System.out.println("What is the package name?");
     System.out.println(COLOR_RESET);
 
-    System.out.print(COLOR_CYAN + "Enter the package name (leave blank if you want to make package same as path): "+ COLOR_RESET);
+    System.out.print(
+        COLOR_CYAN +
+        "Enter the package name (leave blank if you want to make package same as path): " +
+        COLOR_RESET);
     String packageName = scanner.nextLine();
     try {
-      if(packageName.isEmpty())
+      if (packageName.isEmpty())
         packageName = Utils.getPackageFromPath(path);
-      System.out.println(COLOR_YELLOW + "Checking if package name is valid..." + COLOR_RESET);
+      System.out.println(COLOR_YELLOW + "Checking if package name is valid..." +
+                         COLOR_RESET);
       Utils.checkIfPackageNameIsValid(packageName);
     } catch (Exception e) {
       clearScreen();
@@ -146,7 +155,7 @@ public class ConsoleDisplay {
     }
 
     try {
-      System.out.print(COLOR_CYAN + "Enter the number: "+ COLOR_RESET);
+      System.out.print(COLOR_CYAN + "Enter the number: " + COLOR_RESET);
       int templateNumber = Integer.parseInt(scanner.nextLine());
       System.out.println();
       return availableTemplates[templateNumber - 1];

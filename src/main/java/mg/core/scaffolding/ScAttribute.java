@@ -2,23 +2,19 @@ package mg.core.scaffolding;
 
 import mg.core.Utils;
 
-
 public class ScAttribute {
   private String importName;
   private String name;
   private String langType;
   private String mappingType;
 
-
   // Constructors
-  public ScAttribute() {
-  }
-
+  public ScAttribute() {}
 
   // Methods
   public String getName() {
-    if(getLangType().equalsIgnoreCase("boolean"))
-      if(name.startsWith("is"))
+    if (getLangType().equalsIgnoreCase("boolean"))
+      if (name.startsWith("is"))
         return name.substring(2);
     return name;
   }
@@ -27,9 +23,7 @@ public class ScAttribute {
     return Utils.toCamelCase(getName(), firstUpper);
   }
 
-  public String getNameCamelCase() {
-    return getNameCamelCase(false);
-  }
+  public String getNameCamelCase() { return getNameCamelCase(false); }
 
   public String getGetterName() {
     if (getLangType().equalsIgnoreCase("boolean"))
@@ -37,35 +31,20 @@ public class ScAttribute {
     return "get" + getNameCamelCase(true);
   }
 
-  public String getSetterName() {
-    return "set" + getNameCamelCase(true);
-  }
-
+  public String getSetterName() { return "set" + getNameCamelCase(true); }
 
   // Getters and Setters
-  public String getImportName() {
-    return importName;
-  }
+  public String getImportName() { return importName; }
 
-  public void setImportName(String importName) {
-    this.importName = importName;
-  }
+  public void setImportName(String importName) { this.importName = importName; }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+  public void setName(String name) { this.name = name; }
 
-  public String getLangType() {
-    return langType;
-  }
+  public String getLangType() { return langType; }
 
-  public void setLangType(String langType) {
-    this.langType = langType;
-  }
+  public void setLangType(String langType) { this.langType = langType; }
 
-  public String getMappingType() {
-    return mappingType;
-  }
+  public String getMappingType() { return mappingType; }
 
   public void setMappingType(String mappingType) {
     this.mappingType = mappingType;

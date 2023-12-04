@@ -2,14 +2,11 @@ package mg.core.data;
 
 import mg.core.Utils;
 
-
 public class DbData {
   private DbMapping[] mappings;
 
   // Constructors
-  public DbData() {
-  }
-
+  public DbData() {}
 
   // Methods
   public static DbData getDbData(String path) {
@@ -31,13 +28,8 @@ public class DbData {
     throw new RuntimeException("Type: " + type + " is not yet supported.");
   }
 
-
   // Getters and setters
-  public DbMapping[] getMappings() {
-    return mappings;
-  }
+  public DbMapping[] getMappings() { return mappings; }
 
-  public void setMappings(DbMapping[] mappings) {
-    this.mappings = mappings;
-  }
+  public void setMappings(DbMapping[] mappings) { this.mappings = mappings; }
 }

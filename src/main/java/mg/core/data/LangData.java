@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import mg.core.Utils;
 
-
 public class LangData {
   private String extension;
   private List<String> preImported;
@@ -13,9 +12,7 @@ public class LangData {
   private List<LangMapping> mappings;
 
   // Constructors
-  public LangData() {
-  }
-
+  public LangData() {}
 
   // Methods
   public static LangData getLangData(String path) {
@@ -35,51 +32,38 @@ public class LangData {
   }
 
   public LangMapping getMappedType(String map) {
-    for(LangMapping langMapping:getMappings()) {
-      if(langMapping.getMappingType().equalsIgnoreCase(map)) {
+    for (LangMapping langMapping : getMappings()) {
+      if (langMapping.getMappingType().equalsIgnoreCase(map)) {
         return langMapping;
       }
     }
-    throw new RuntimeException("Langage map type not found for: "+map);
+    throw new RuntimeException("Langage map type not found for: " + map);
   }
-
 
   // Getters and Setters
-  public String getExtension() {
-    return extension;
-  }
+  public String getExtension() { return extension; }
 
-  public void setExtension(String extension) {
-    this.extension = extension;
-  }
+  public void setExtension(String extension) { this.extension = extension; }
 
-  public List<String> getPreImported() {
-    return preImported;
-  }
+  public List<String> getPreImported() { return preImported; }
 
   public void setPreImported(List<String> preImported) {
     this.preImported = preImported;
   }
 
-  public HashMap<String, String> getTemplates() {
-    return templates;
-  }
+  public HashMap<String, String> getTemplates() { return templates; }
 
   public void setTemplates(HashMap<String, String> templates) {
     this.templates = templates;
   }
 
-  public HashMap<String, String> getTraductions() {
-    return traductions;
-  }
+  public HashMap<String, String> getTraductions() { return traductions; }
 
   public void setTraductions(HashMap<String, String> traductions) {
     this.traductions = traductions;
   }
 
-  public List<LangMapping> getMappings() {
-    return mappings;
-  }
+  public List<LangMapping> getMappings() { return mappings; }
 
   public void setMappings(List<LangMapping> mappings) {
     this.mappings = mappings;
