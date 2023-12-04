@@ -2,6 +2,8 @@ import lombok.Cleanup;
 import mg.core.Utils;
 import mg.database.Database;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
@@ -15,10 +17,20 @@ public class Main {
   public final static String COLOR_BLACK = "\u001B[30m";
   public final static String COLOR_RESET = "\u001B[0m";
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException {
+    clearScreen();
+
     @Cleanup Scanner scanner = new Scanner(System.in);
 
-    clearScreen();
+    Database database = new Database();
+    Connection connection = null;
+    try {
+      connection = database.getConnection();
+    } catch (Exception e) {
+      System.out.println(COLOR_RED + "Connection to database failed 😕: " + e.getMessage() + COLOR_RESET);
+      System.exit(0);
+    }
+
 
     try {
       String langage = askForLangage(scanner);
@@ -27,11 +39,12 @@ public class Main {
       String template = askForTemplate(scanner);
 
       System.out.println(COLOR_YELLOW + "Processing..." + COLOR_RESET);
-      Database database = new Database();
-      database.generateClass(langage, path, packageName, template, true);
+      database.generateClass(langage, path, packageName, template, true, connection);
         System.out.println(COLOR_GREEN + "Done!" + COLOR_RESET);
     } catch (RuntimeException e) {
       System.out.println(COLOR_RED + "Error 😕: " + e.getMessage() + COLOR_RESET);
+    } finally {
+      connection.close();
     }
   }
 
