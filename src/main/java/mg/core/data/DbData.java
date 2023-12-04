@@ -1,12 +1,17 @@
 package mg.core.data;
 
-import lombok.Data;
 import mg.core.Utils;
 
-@Data
-public class DbData {
-  DbMapping[] mappings;
 
+public class DbData {
+  private DbMapping[] mappings;
+
+  // Constructors
+  public DbData() {
+  }
+
+
+  // Methods
   public static DbData getDbData(String path) {
     try {
       return Utils.readFileJson(path, DbData.class);
@@ -24,5 +29,15 @@ public class DbData {
       }
     }
     throw new RuntimeException("Type: " + type + " is not yet supported.");
+  }
+
+
+  // Getters and setters
+  public DbMapping[] getMappings() {
+    return mappings;
+  }
+
+  public void setMappings(DbMapping[] mappings) {
+    this.mappings = mappings;
   }
 }

@@ -4,16 +4,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Cleanup;
-import lombok.Data;
-import lombok.val;
 import mg.core.data.DbData;
 import mg.core.Utils;
 import mg.core.scaffolding.ScClass;
 import mg.exception.DatabaseException;
 import mg.exception.ScaffoldingException;
 
-@Data
+
 public class Database {
   public final String URL = Utils.getEnv("DB_URL");
   public final String USER = Utils.getEnv("DB_USER");
@@ -23,6 +20,13 @@ public class Database {
   public String jsonConfig;
   private DbData dbData;
 
+
+  // Constructors
+  public Database() {
+  }
+
+
+  // Methods
   public String getJsonConfig() {
     if (jsonConfig == null)
       try {
@@ -57,14 +61,17 @@ public class Database {
 
   public List<Table> getTables(Connection connection) {
     try {
-      val databaseMetaData = connection.getMetaData();
-      @Cleanup val resultSet = databaseMetaData.getTables(null, SCHEMA, null, new String[]{"TABLE", "VIEW"});
-      val tables = new ArrayList<Table>();
+      final DatabaseMetaData databaseMetaData = connection.getMetaData();
+      final ResultSet resultSet = databaseMetaData.getTables(null, SCHEMA, null, new String[]{"TABLE", "VIEW"});
+      final List<Table> tables = new ArrayList<>();
+
       while (resultSet.next()) {
-        val table = getTable(resultSet.getString("TABLE_NAME"), connection);
+        final Table table = getTable(resultSet.getString("TABLE_NAME"), connection);
         table.setMutable(resultSet.getString("TABLE_TYPE").equals("TABLE"));
         tables.add(table);
       }
+
+      resultSet.close();
       return tables;
     } catch (SQLException e) {
       throw new DatabaseException("Error getting tables: " + e.getMessage());
@@ -72,14 +79,14 @@ public class Database {
   }
 
   public Table getTable(String name, Connection connection) {
-    val table = new Table();
+    Table table = new Table();
     table.setName(name);
-    val columns = new ArrayList<Column>();
+    List<Column> columns = new ArrayList<>();
 
     try {
-      @Cleanup val resultSet = connection.getMetaData().getColumns(null, SCHEMA, name, null);
+      ResultSet resultSet = connection.getMetaData().getColumns(null, SCHEMA, name, null);
       while (resultSet.next()) {
-        val column = new Column();
+        Column column = new Column();
         column.setName(resultSet.getString("COLUMN_NAME"));
         column.setType(resultSet.getString("TYPE_NAME"));
         column.setNullable(resultSet.getBoolean("NULLABLE"));
@@ -88,6 +95,7 @@ public class Database {
         columns.add(column);
       }
       table.setColumns(columns);
+      resultSet.close();
       return table;
     } catch (SQLException e) {
       throw new DatabaseException("Error getting table: " + e.getMessage());
@@ -104,8 +112,9 @@ public class Database {
 
   public void generateClass(String langage, String path, String packageName, String template, boolean gettersSetters) {
     try {
-      @Cleanup val connection = getConnection();
+      Connection connection = getConnection();
       generateClass(langage, path, packageName, template, gettersSetters, connection);
+      connection.close();
     } catch (SQLException e) {
       throw new DatabaseException("Error getting connection from the database: " + e.getMessage());
     }
@@ -122,8 +131,9 @@ public class Database {
 
   public void generateClass(String langage, String path, String template, boolean gettersSetters) {
     try {
-      @Cleanup val connection = getConnection();
+      Connection connection = getConnection();
       generateClass(langage, path, path, template, gettersSetters, connection);
+      connection.close();
     } catch (SQLException e) {
       throw new DatabaseException("Error getting connection from the database: " + e.getMessage());
     }
@@ -131,5 +141,15 @@ public class Database {
 
   public void generateClass(String langage, String path, String template, boolean gettersSetters, Connection connection) {
     generateClass(langage, path, path, template, gettersSetters, connection);
+  }
+
+
+  // Getters and Setters
+  public void setJsonConfig(String jsonConfig) {
+    this.jsonConfig = jsonConfig;
+  }
+
+  public void setDbData(DbData dbData) {
+    this.dbData = dbData;
   }
 }

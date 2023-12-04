@@ -3,16 +3,15 @@ package mg.core.scaffolding;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.val;
 import mg.core.Utils;
+import mg.core.data.DbMapping;
 import mg.core.data.LangData;
+import mg.core.data.LangMapping;
+import mg.database.Column;
 import mg.database.Database;
 import mg.database.Table;
 
-@Data
-@NoArgsConstructor
+
 public class ScClass {
   private String packageName;
   private List<String> imports = new ArrayList<>();
@@ -21,14 +20,18 @@ public class ScClass {
   private LangData langData;
   private String language;
 
+  // Constructors
+  public ScClass() {
+  }
+
   public ScClass(String language, Table table, Database database) {
     setName(table.getName());
     setLanguage(language);
 
-    for (val column : table.getColumns()) {
-      val map = database.getDbData().getMappedType(column.getType());
-      val langMap = getLangData().getMappedType(map.getMappingType());
-      val scAttribute = new ScAttribute();
+    for (Column column : table.getColumns()) {
+      final DbMapping map = database.getDbData().getMappedType(column.getType());
+      final LangMapping langMap = getLangData().getMappedType(map.getMappingType());
+      ScAttribute scAttribute = new ScAttribute();
       scAttribute.setName(column.getName());
       scAttribute.setLangType(langMap.getEquivalentType());
       scAttribute.setMappingType(map.getMappingType());
@@ -37,6 +40,8 @@ public class ScClass {
     }
   }
 
+
+  // Methods
   public void addImport(String importName) {
     if (importName != null && !importName.isEmpty() && !getImports().contains(importName))
       getImports().add(importName);
@@ -68,16 +73,16 @@ public class ScClass {
   }
 
   public String importsToCode() {
-    val imports = new StringBuilder();
-    for (val importName : getImports())
+    final StringBuilder imports = new StringBuilder();
+    for (String importName : getImports())
       if (getLangData().getPreImported().stream().noneMatch(importName::startsWith))
         imports.append(importToCode(importName));
     return imports.toString();
   }
 
   public String attributesToCode() {
-    val attributes = new StringBuilder();
-    for (val scAttribute : getAttributes())
+    final StringBuilder attributes = new StringBuilder();
+    for (ScAttribute scAttribute : getAttributes())
       attributes.append(attributeToCode(scAttribute));
     return attributes.toString();
   }
@@ -95,8 +100,8 @@ public class ScClass {
     }
 
   public String gettersAndSettersToCode() {
-    val gettersAndSetters = new StringBuilder();
-    for (val scAttribute : getAttributes()) {
+    final StringBuilder gettersAndSetters = new StringBuilder();
+    for (ScAttribute scAttribute : getAttributes()) {
       gettersAndSetters.append(getterToCode(scAttribute));
       gettersAndSetters.append(setterToCode(scAttribute));
     }
@@ -110,7 +115,7 @@ public class ScClass {
   }
 
   public String evaluate(String template) {
-    for (val toTranslate : getLangData().getTraductions().keySet()) {
+    for (String toTranslate : getLangData().getTraductions().keySet()) {
       template = template.replace("$" + toTranslate,
               getLangData().getTraduction(toTranslate));
     }
@@ -118,7 +123,7 @@ public class ScClass {
   }
 
   public String convert(String templateConversion, boolean withGettersAndSetters) {
-    var template =
+    String template =
         Utils.readFile(Utils.DATA_TEMPLATES_PATH +
                        getLangData().getTemplate(templateConversion));
 
@@ -140,5 +145,51 @@ public class ScClass {
 
   public void generate(String path, String templateConversion, boolean withGettersAndSetters) {
     generate(path, Utils.getPackageFromPath(path), templateConversion, withGettersAndSetters);
+  }
+
+
+  // Getters and Setters
+  public String getPackageName() {
+    return packageName;
+  }
+
+  public void setPackageName(String packageName) {
+    this.packageName = packageName;
+  }
+
+  public List<String> getImports() {
+    return imports;
+  }
+
+  public void setImports(List<String> imports) {
+    this.imports = imports;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public List<ScAttribute> getAttributes() {
+    return attributes;
+  }
+
+  public void setAttributes(List<ScAttribute> attributes) {
+    this.attributes = attributes;
+  }
+
+  public void setLangData(LangData langData) {
+    this.langData = langData;
+  }
+
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
   }
 }

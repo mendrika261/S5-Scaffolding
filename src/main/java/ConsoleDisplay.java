@@ -1,12 +1,10 @@
-import lombok.Cleanup;
 import mg.core.Utils;
 import mg.database.Database;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Scanner;
 
-public class Main {
+public class ConsoleDisplay {
   public final static String COLOR_RED = "\u001B[31m";
   public final static String COLOR_GREEN = "\u001B[32m";
   public final static String COLOR_YELLOW = "\u001B[33m";
@@ -17,10 +15,10 @@ public class Main {
   public final static String COLOR_BLACK = "\u001B[30m";
   public final static String COLOR_RESET = "\u001B[0m";
 
-  public static void main(String[] args) throws SQLException {
+  public static void main(String[] args) {
     clearScreen();
 
-    @Cleanup Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in);
 
     Database database = new Database();
     Connection connection = null;
@@ -40,12 +38,14 @@ public class Main {
 
       System.out.println(COLOR_YELLOW + "Processing..." + COLOR_RESET);
       database.generateClass(langage, path, packageName, template, true, connection);
-        System.out.println(COLOR_GREEN + "Done!" + COLOR_RESET);
-    } catch (RuntimeException e) {
-      System.out.println(COLOR_RED + "Error 😕: " + e.getMessage() + COLOR_RESET);
-    } finally {
+      System.out.println(COLOR_GREEN + "Done!" + COLOR_RESET);
+
       connection.close();
+    } catch (Exception e) {
+      System.out.println(COLOR_RED + "Error 😕: " + e.getMessage() + COLOR_RESET);
     }
+
+    scanner.close();
   }
 
   private static void printLogo() {

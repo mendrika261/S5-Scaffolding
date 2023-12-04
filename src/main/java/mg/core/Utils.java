@@ -6,11 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import lombok.extern.java.Log;
-import lombok.val;
 import mg.exception.ScaffoldingException;
 
-@Log
 public class Utils {
   public static final String WD_PATH = System.getProperty("user.dir") + "/";
 
@@ -18,6 +15,7 @@ public class Utils {
   public static final String DATA_DB_PATH = DATA_PATH + "db/";
   public static final String DATA_LANG_PATH = DATA_PATH + "lang/";
   public static final String DATA_TEMPLATES_PATH = DATA_PATH + "templates/";
+
 
   public static String readFile(File file) {
     try {
@@ -32,8 +30,8 @@ public class Utils {
   }
 
   public static String getEnv(String key) {
-    Dotenv dotenv = Dotenv.configure().systemProperties().directory(WD_PATH).load();
-    String value = dotenv.get(key);
+    final Dotenv dotenv = Dotenv.configure().systemProperties().directory(WD_PATH).load();
+    final String value = dotenv.get(key);
     if (value == null) {
       throw new ScaffoldingException("Environment variable not set: " + key);
     }
@@ -41,8 +39,8 @@ public class Utils {
   }
 
   public static String getEnv(String key, String defaultValue) {
-    Dotenv dotenv = Dotenv.configure().systemProperties().directory(WD_PATH).load();
-    String value = dotenv.get(key);
+    final Dotenv dotenv = Dotenv.configure().systemProperties().directory(WD_PATH).load();
+    final String value = dotenv.get(key);
     if (value == null) {
       return defaultValue;
     }
@@ -52,7 +50,7 @@ public class Utils {
   private static String getEnvPath(String key, String defaultValue) {
     String value = getEnv(key, defaultValue);
     if (value.isBlank() || value.isEmpty()) {
-      log.info("Using default value for " + key + ": " + defaultValue);
+      System.out.println("Using default value for " + key + ": " + defaultValue);
       return value;
     }
     if (!value.endsWith("/")) {
@@ -62,12 +60,12 @@ public class Utils {
   }
 
   public static <T> T readFileJson(String path, Class<T> classMap) {
-    Gson gson = new Gson();
+    final Gson gson = new Gson();
     return gson.fromJson(readFile(path), classMap);
   }
 
   public static String toCamelCase(String string) {
-    StringBuilder stringBuilder = new StringBuilder();
+    final StringBuilder stringBuilder = new StringBuilder();
     boolean nextUpper = true;
     for (char c : string.toCharArray()) {
       if (c == '_') {
@@ -85,13 +83,13 @@ public class Utils {
   }
 
   public static String toCamelCase(String string, boolean firstUpper) {
-    String camelCase = toCamelCase(string);
+    final String camelCase = toCamelCase(string);
     return firstUpper? camelCase: camelCase.substring(0, 1).toLowerCase() + camelCase.substring(1);
   }
 
   public static void writeFile(String fileName, Object object) {
     try {
-      val file = new File(fileName);
+      final File file = new File(fileName);
       if (file.getParentFile() != null && !file.getParentFile().exists() && !file.getParentFile().mkdirs())
         throw new ScaffoldingException("Error creating directories: " +
                                  file.getParentFile().getAbsolutePath());
@@ -119,10 +117,10 @@ public class Utils {
   }
 
     public static String[] getAvailableLanguages() {
-      File[] files = new File(DATA_LANG_PATH).listFiles();
+      final File[] files = new File(DATA_LANG_PATH).listFiles();
       if (files == null)
         throw new ScaffoldingException("Error getting available languages");
-      String[] languages = new String[files.length];
+      final String[] languages = new String[files.length];
       for (int i = 0; i < files.length; i++) {
         languages[i] = files[i].getName().replace(".json", "");
       }
@@ -136,7 +134,7 @@ public class Utils {
       path = path.substring(WD_PATH.length());
     if (path.endsWith("/"))
       path = path.substring(0, path.length() - 1);
-    String[] directories = path.split("/");
+    final String[] directories = path.split("/");
     String currentPath = WD_PATH;
     for (String directory : directories) {
       currentPath += directory + "/";
@@ -155,7 +153,7 @@ public class Utils {
       packageName = packageName.substring(1);
     if (packageName.endsWith("."))
       packageName = packageName.substring(0, packageName.length() - 1);
-    String[] directories = packageName.split("\\.");
+    final String[] directories = packageName.split("\\.");
     for (String directory : directories) {
       if (!directory.matches("[a-z][a-z0-9]*"))
         throw new ScaffoldingException("Invalid package name: " + packageName);
@@ -163,10 +161,10 @@ public class Utils {
   }
 
   public static String[] getAvailableTemplates() {
-    File[] files = new File(DATA_TEMPLATES_PATH).listFiles();
+    final File[] files = new File(DATA_TEMPLATES_PATH).listFiles();
     if (files == null)
       throw new ScaffoldingException("Error getting available templates");
-    String[] templates = new String[files.length];
+    final String[] templates = new String[files.length];
     for (int i = 0; i < files.length; i++) {
       templates[i] = files[i].getName().replace(".template", "");
     }
