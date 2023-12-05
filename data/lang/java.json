@@ -4,7 +4,7 @@
   "templates": {
     "class": "class.template",
     "class_lombok": "class-java-lombok.template",
-    "rest_controller_spring": "rest-controller-spring.template"
+    "rest_controller_spring": "rest_controller_spring.template"
   },
   "traductions": {
     "{": "{",

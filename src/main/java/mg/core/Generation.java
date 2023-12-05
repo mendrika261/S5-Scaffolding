@@ -1,13 +1,13 @@
 package mg.core;
 
 import mg.core.scaffolding.ScClass;
+import mg.core.scaffolding.ScRestController;
 import mg.database.Database;
 import mg.database.Table;
 import mg.exception.DatabaseException;
 import mg.exception.ScaffoldingException;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 public class Generation {
     private String langage;
@@ -31,6 +31,10 @@ public class Generation {
     public void generate(Connection connection) {
         if (getTemplate().startsWith("class")) {
             generateAllClass(connection);
+        } else if (getTemplate().startsWith("rest_controller")) {
+            generateAllRestController(connection);
+        } else {
+            throw new ScaffoldingException("Template not found: " + getTemplate());
         }
     }
 
@@ -41,6 +45,16 @@ public class Generation {
     public void generateAllClass(Connection connection) {
         for (Table table : getDatabase().getTables(connection)) {
             generateClass(table);
+        }
+    }
+
+    public void generateRestController(Table table) {
+        new ScRestController(getLangage(), table, getDatabase()).generate(getPath(), getPackageName(), getTemplate(), haveGettersSetters());
+    }
+
+    public void generateAllRestController(Connection connection) {
+        for (Table table : getDatabase().getTables(connection)) {
+            generateRestController(table);
         }
     }
 
