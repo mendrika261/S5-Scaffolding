@@ -1,0 +1,36 @@
+#package#
+
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.beans.factory.annotation.AutoWired;
+
+#imports#
+
+@RestController
+$class #class#RestController ${
+    @AutoWired
+    private final #class#Service #className#Service;
+
+    @PostMapping("#className#/")
+    $public $void create(@ModelAttribute #class# #className#) {
+        #className#Service.create(#className#);
+    }
+
+    @PostMapping("#className#/{id}")
+    $public #class# read() {
+        return #className#Service.read(#className#);
+    }
+
+    @PutMapping("#className#/{id}")
+    $public #class# update(@ModelAttribute #class# #className#) {
+        return #className#Service.update(#className#);
+    }
+
+    @DeleteMapping("#class#/{id}")
+    $public $void delete() {
+        #className#Service.delete(#className#);
+    }
+$}
