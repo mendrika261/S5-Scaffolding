@@ -1,3 +1,4 @@
+import mg.core.Generation;
 import mg.core.Utils;
 import mg.database.Database;
 
@@ -34,10 +35,12 @@ public class ConsoleDisplay {
       String langage = askForLangage(scanner);
       String path = askForPath(scanner);
       String packageName = askForPackageName(scanner, path);
+      System.out.println(packageName);
       String template = askForTemplate(scanner);
 
       System.out.println(COLOR_YELLOW + "Processing..." + COLOR_RESET);
-      database.generateClass(langage, path, packageName, template, true, connection);
+      Generation generation = new Generation(langage, path, packageName, template, database, true);
+      generation.generate(connection);
       System.out.println(COLOR_GREEN + "Done!" + COLOR_RESET);
 
       connection.close();
