@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.AutoWired;
 #imports#
 
 @RestController
-$class #class#RestController ${
+$public $class #class#RestController ${
     @AutoWired
     private final #class#Service #className#Service;
 

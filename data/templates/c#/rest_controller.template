@@ -1,0 +1,15 @@
+using Microsoft.AspNetCore.Mvc;
+
+#namespace#
+
+[ApiController]
+[Route("[controller]")]
+public class #class#Controller : ControllerBase
+{
+    private readonly #class#Service _#className#Service;
+
+    public #class#Controller(#class#Service #className#Service)
+    {
+        _#className#Service = #className#Service;
+    }
+}

@@ -1,0 +1,43 @@
+using Microsoft.AspNetCore.Mvc;
+
+#namespace#
+
+[ApiController]
+[Route("[controller]")]
+public class #class#Controller : ControllerBase
+{
+    private readonly #class#Service _#className#Service;
+
+    public #class#Controller(#class#Service #className#Service)
+    {
+        _#className#Service = #className#Service;
+    }
+
+    [HttpPost]
+    public IActionResult Create([FromBody] #class# #className#)
+    {
+        _#className#Service.Create(#className#);
+        return Ok();
+    }
+
+    [HttpGet("{id}")]
+    public IActionResult Read(string id)
+    {
+        var result = _#className#Service.Read(id);
+        return Ok(result);
+    }
+
+    [HttpPut("{id}")]
+    public IActionResult Update([FromBody] #class# #className#)
+    {
+        var result = _#className#Service.Update(#className#);
+        return Ok(result);
+    }
+
+    [HttpDelete("{id}")]
+    public IActionResult Delete(string id)
+    {
+        _#className#Service.Delete(id);
+        return Ok();
+    }
+}
