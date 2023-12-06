@@ -79,6 +79,8 @@ public class Database {
     }
   }
 
+
+
   public Table getTable(String name, Connection connection) {
     Table table = new Table();
     table.setName(name);

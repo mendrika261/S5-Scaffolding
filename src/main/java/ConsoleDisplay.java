@@ -38,7 +38,7 @@ public class ConsoleDisplay {
       String langage = askForLangage(scanner);
 
       while(true) {
-        final String template = askForTemplate(scanner);
+        final String template = askForTemplate(langage, scanner);
         final String path = askForPath(scanner);
         final String packageName = askForPackageName(scanner, path);
         Table table = askForTable(scanner, database, connection);
@@ -47,8 +47,10 @@ public class ConsoleDisplay {
         final Generation generation = new Generation(langage, path, packageName, template, database, true);
         generation.setTable(table);
         generation.generate(connection);
-        System.out.println(COLOR_GREEN + "Done!" + COLOR_RESET);
+        System.out.println(COLOR_GREEN + "Done! 🍭" + COLOR_RESET);
 
+        System.out.println();
+        System.out.println("Need something else?");
         // TODO: control + D to break while
       }
     } catch (Exception e) {
@@ -145,12 +147,12 @@ public class ConsoleDisplay {
     return packageName;
   }
 
-  private static String askForTemplate(Scanner scanner) {
+  private static String askForTemplate(String langage, Scanner scanner) {
     System.out.println(COLOR_GREEN + "*".repeat(50));
     System.out.println("What template do you want to use?");
     System.out.println(COLOR_RESET);
 
-    final String[] availableTemplates = Utils.getAvailableTemplates();
+    final String[] availableTemplates = Utils.getAvailableTemplates(langage);
     for (int i = 0; i < availableTemplates.length; i++) {
       System.out.println((i + 1) + ". " + availableTemplates[i]);
     }
@@ -164,7 +166,7 @@ public class ConsoleDisplay {
       clearScreen();
       System.out.println(COLOR_RED);
       System.out.println("Please enter a valid number" + COLOR_RESET);
-      return askForTemplate(scanner);
+      return askForTemplate(langage, scanner);
     }
   }
 

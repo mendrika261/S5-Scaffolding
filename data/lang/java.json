@@ -3,8 +3,8 @@
   "preImported": ["java.lang"],
   "templates": {
     "class": "class.template",
-    "class_lombok": "class-java-lombok.template",
-    "rest_controller_spring": "rest_controller_spring.template"
+    "rest_controller_spring": "java/rest_controller_spring.template",
+    "rest_controller_crud_spring": "java/rest_controller_crud_spring.template"
   },
   "traductions": {
     "{": "{",

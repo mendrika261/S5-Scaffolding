@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+import mg.core.data.LangData;
 import mg.exception.ScaffoldingException;
 
 public class Utils {
@@ -160,15 +161,9 @@ public class Utils {
     }
   }
 
-  public static String[] getAvailableTemplates() {
-    final File[] files = new File(DATA_TEMPLATES_PATH).listFiles();
-    if (files == null)
-      throw new ScaffoldingException("Error getting available templates");
-    final String[] templates = new String[files.length];
-    for (int i = 0; i < files.length; i++) {
-      templates[i] = files[i].getName().replace(".template", "");
-    }
-    return templates;
+  public static String[] getAvailableTemplates(String langage) {
+    LangData langData = LangData.getLangData(DATA_LANG_PATH + langage + ".json");
+    return langData.getTemplates().keySet().toArray(new String[0]);
   }
 
   public static boolean isInteger(String numberString) {
