@@ -170,4 +170,13 @@ public class Utils {
     }
     return templates;
   }
+
+  public static boolean isInteger(String numberString) {
+    try {
+      Integer.parseInt(numberString);
+    } catch (NumberFormatException ignored) {
+      return false;
+    }
+    return true;
+  }
 }

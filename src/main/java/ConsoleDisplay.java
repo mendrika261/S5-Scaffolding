@@ -1,8 +1,12 @@
 import mg.core.Generation;
 import mg.core.Utils;
 import mg.database.Database;
+import mg.database.Table;
 
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class ConsoleDisplay {
@@ -16,7 +20,7 @@ public class ConsoleDisplay {
   public final static String COLOR_BLACK = "\u001B[30m";
   public final static String COLOR_RESET = "\u001B[0m";
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws SQLException {
     clearScreen();
 
     Scanner scanner = new Scanner(System.in);
@@ -30,25 +34,25 @@ public class ConsoleDisplay {
       System.exit(1);
     }
 
-
     try {
       String langage = askForLangage(scanner);
-      String path = askForPath(scanner);
-      String packageName = askForPackageName(scanner, path);
-      System.out.println(packageName);
-      String template = askForTemplate(scanner);
 
-      System.out.println(COLOR_YELLOW + "Processing..." + COLOR_RESET);
-      Generation generation = new Generation(langage, path, packageName, template, database, true);
-      generation.generate(connection);
-      System.out.println(COLOR_GREEN + "Done!" + COLOR_RESET);
+      while(true) {
+        String template = askForTemplate(scanner);
+        String path = askForPath(scanner);
+        String packageName = askForPackageName(scanner, path);
+        Table table = askForTable(scanner, database, connection);
 
-      connection.close();
+        System.out.println(COLOR_YELLOW + "Processing..." + COLOR_RESET);
+        Generation generation = new Generation(langage, path, packageName, template, database, true);
+        generation.generate(connection);
+        System.out.println(COLOR_GREEN + "Done!" + COLOR_RESET);
+      }
     } catch (Exception e) {
       System.out.println(COLOR_RED + "Error 😕: " + e.getMessage() + COLOR_RESET);
-      main(args);
     }
 
+    connection.close();
     scanner.close();
   }
 
@@ -159,5 +163,42 @@ public class ConsoleDisplay {
       System.out.println("Please enter a valid number" + COLOR_RESET);
       return askForTemplate(scanner);
     }
+  }
+
+  private static Table askForTable(Scanner scanner, Database database, Connection connection) {
+    System.out.println(COLOR_GREEN + "*".repeat(50));
+    System.out.println("What table do you want to generate the class for?");
+    System.out.println(COLOR_RESET);
+
+    List<Table> availableTable = database.getTables(connection);
+    for (int i=0; i<availableTable.size(); i++) {
+      System.out.println((i + 1) + ". " + availableTable.get(i).getName());
+    }
+
+    System.out.print(COLOR_CYAN + "Enter the table name or number: "+ COLOR_RESET);
+    Table tableTarget = null;
+    try {
+      String table = scanner.nextLine();
+      System.out.println(COLOR_YELLOW + "Checking if table exists..." + COLOR_RESET);
+
+      if(Utils.isInteger(table)) {
+        int tableNumber = Integer.parseInt(table);
+        if(tableNumber > availableTable.size() | tableNumber < 1)
+          throw new Exception("Table number '" + table + "' does not exist");
+        tableTarget = availableTable.get(tableNumber - 1);
+      } else {
+        Optional<Table> tableTargetInput = availableTable.stream().filter(t -> t.getName().equals(table)).findFirst();
+        if(tableTargetInput.isEmpty())
+          throw new Exception("Table with name '" + table + "' does not exist");
+        tableTarget = tableTargetInput.get();
+      }
+    } catch (Exception e) {
+      clearScreen();
+      System.out.println(COLOR_RED);
+      System.out.println(e.getMessage() + COLOR_RESET);
+      return askForTable(scanner, database, connection);
+    }
+    System.out.println();
+    return tableTarget;
   }
 }
