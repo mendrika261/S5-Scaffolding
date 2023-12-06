@@ -5,8 +5,8 @@
   ],
   "templates": {
     "class": "class.template",
-    "rest_controller": "c#/rest_controller_spring.template",
-    "rest_controller_crud": "c#/rest_controller_crud_spring.template"
+    "rest_controller": "c#/rest_controller.template",
+    "rest_controller_crud": "c#/rest_controller_crud.template"
   },
   "traductions": {
     "{": "{",
