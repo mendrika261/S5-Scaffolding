@@ -38,15 +38,18 @@ public class ConsoleDisplay {
       String langage = askForLangage(scanner);
 
       while(true) {
-        String template = askForTemplate(scanner);
-        String path = askForPath(scanner);
-        String packageName = askForPackageName(scanner, path);
+        final String template = askForTemplate(scanner);
+        final String path = askForPath(scanner);
+        final String packageName = askForPackageName(scanner, path);
         Table table = askForTable(scanner, database, connection);
 
         System.out.println(COLOR_YELLOW + "Processing..." + COLOR_RESET);
-        Generation generation = new Generation(langage, path, packageName, template, database, true);
+        final Generation generation = new Generation(langage, path, packageName, template, database, true);
+        generation.setTable(table);
         generation.generate(connection);
         System.out.println(COLOR_GREEN + "Done!" + COLOR_RESET);
+
+        // TODO: control + D to break while
       }
     } catch (Exception e) {
       System.out.println(COLOR_RED + "Error 😕: " + e.getMessage() + COLOR_RESET);
@@ -82,7 +85,7 @@ public class ConsoleDisplay {
     System.out.println("What language do you want to generate the class in?");
     System.out.println(COLOR_RESET);
 
-    String[] availableLanguages = Utils.getAvailableLanguages();
+    final String[] availableLanguages = Utils.getAvailableLanguages();
     for (int i = 0; i < availableLanguages.length; i++) {
       System.out.println((i + 1) + ". " + Utils.toCamelCase(availableLanguages[i], true));
     }
@@ -106,7 +109,7 @@ public class ConsoleDisplay {
     System.out.println(COLOR_RESET);
 
     System.out.print(COLOR_CYAN + "Enter the path (leave blank for current directory): "+ COLOR_RESET);
-    String path = scanner.nextLine();
+    final String path = scanner.nextLine();
     try {
       System.out.println(COLOR_YELLOW + "Checking if path is writable..." + COLOR_RESET);
       Utils.checkIfPathIsWritable(path);
@@ -147,14 +150,14 @@ public class ConsoleDisplay {
     System.out.println("What template do you want to use?");
     System.out.println(COLOR_RESET);
 
-    String[] availableTemplates = Utils.getAvailableTemplates();
+    final String[] availableTemplates = Utils.getAvailableTemplates();
     for (int i = 0; i < availableTemplates.length; i++) {
       System.out.println((i + 1) + ". " + availableTemplates[i]);
     }
 
     try {
       System.out.print(COLOR_CYAN + "Enter the number: "+ COLOR_RESET);
-      int templateNumber = Integer.parseInt(scanner.nextLine());
+      final int templateNumber = Integer.parseInt(scanner.nextLine());
       System.out.println();
       return availableTemplates[templateNumber - 1];
     } catch (Exception e) {
@@ -175,10 +178,13 @@ public class ConsoleDisplay {
       System.out.println((i + 1) + ". " + availableTable.get(i).getName());
     }
 
-    System.out.print(COLOR_CYAN + "Enter the table name or number: "+ COLOR_RESET);
-    Table tableTarget = null;
+    System.out.print(COLOR_CYAN + "Enter the table name or number (* for all): "+ COLOR_RESET);
+    final Table tableTarget;
     try {
-      String table = scanner.nextLine();
+      final String table = scanner.nextLine();
+
+      if(table.equalsIgnoreCase("*")) return null;
+
       System.out.println(COLOR_YELLOW + "Checking if table exists..." + COLOR_RESET);
 
       if(Utils.isInteger(table)) {
@@ -198,7 +204,6 @@ public class ConsoleDisplay {
       System.out.println(e.getMessage() + COLOR_RESET);
       return askForTable(scanner, database, connection);
     }
-    System.out.println();
     return tableTarget;
   }
 }

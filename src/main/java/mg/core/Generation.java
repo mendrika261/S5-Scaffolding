@@ -16,6 +16,7 @@ public class Generation {
     private String template;
     private Database database;
     private boolean gettersSetters;
+    private Table table;
 
     // Constructors
     public Generation(String langage, String path, String packageName, String template, Database database, boolean gettersSetters) {
@@ -30,9 +31,15 @@ public class Generation {
     // Methods
     public void generate(Connection connection) {
         if (getTemplate().startsWith("class")) {
-            generateAllClass(connection);
+            if (getTable() == null)
+                generateAllClass(connection);
+            else
+                generateClass(getTable());
         } else if (getTemplate().startsWith("rest_controller")) {
-            generateAllRestController(connection);
+            if (getTable() == null)
+                generateAllRestController(connection);
+            else
+                generateRestController(getTable());
         } else {
             throw new ScaffoldingException("Template not found: " + getTemplate());
         }
@@ -107,5 +114,13 @@ public class Generation {
 
     public void setGettersSetters(boolean gettersSetters) {
         this.gettersSetters = gettersSetters;
+    }
+
+    public Table getTable() {
+        return table;
+    }
+
+    public void setTable(Table table) {
+        this.table = table;
     }
 }
