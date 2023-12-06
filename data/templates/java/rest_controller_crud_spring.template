@@ -1,11 +1,13 @@
 #package#
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.AutoWired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.beans.factory.annotation.AutoWired;
+import org.springframework.web.bind.annotation.PathVariable;
 
 #imports#
 
@@ -14,22 +16,27 @@ $public $class #class#RestController ${
     @AutoWired
     private final #class#Service #className#Service;
 
-    @PostMapping("#className#/")
+    @PostMapping("#className#s/")
     $public $void create(@ModelAttribute #class# #className#) {
         #className#Service.create(#className#);
     }
 
-    @PostMapping("#className#/{id}")
+    @GetMapping("#className#s")
     $public #class# read() {
-        return #className#Service.read(#className#);
+        return #className#Service.getAll();
     }
 
-    @PutMapping("#className#/{id}")
+    @GetMapping("#className#s/{id}")
+    $public #class# read(@PathVariable("id") #idType# id) {
+        return #className#Service.get(id);
+    }
+
+    @PutMapping("#className#s/{id}")
     $public #class# update(@ModelAttribute #class# #className#) {
         return #className#Service.update(#className#);
     }
 
-    @DeleteMapping("#class#/{id}")
+    @DeleteMapping("#className#s/{id}")
     $public $void delete() {
         #className#Service.delete(#className#);
     }

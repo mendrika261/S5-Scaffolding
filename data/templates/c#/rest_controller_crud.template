@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 #namespace#
 
 [ApiController]
-[Route("[controller]")]
+[Route("[#className#s]")]
 public class #class#Controller : ControllerBase
 {
     private readonly #class#Service _#className#Service;
@@ -18,6 +18,13 @@ public class #class#Controller : ControllerBase
     {
         _#className#Service.Create(#className#);
         return Ok();
+    }
+
+    [HttpGet]
+    public IActionResult ReadAll()
+    {
+        var result = _#className#Service.ReadAll();
+        return Ok(result);
     }
 
     [HttpGet("{id}")]
