@@ -90,6 +90,7 @@ public class Database {
       ResultSet resultSet = connection.getMetaData().getColumns(null, SCHEMA, name, null);
       while (resultSet.next()) {
         Column column = new Column();
+        column.setPrimaryKey(resultSet.isFirst());
         column.setName(resultSet.getString("COLUMN_NAME"));
         column.setType(resultSet.getString("TYPE_NAME"));
         column.setNullable(resultSet.getBoolean("NULLABLE"));

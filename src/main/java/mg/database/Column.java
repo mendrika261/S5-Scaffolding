@@ -7,6 +7,7 @@ public class Column {
   private boolean isNullable;
   private String defaultValue;
   private String comment;
+  private boolean isPrimaryKey;
 
   // Constructors
   public Column() {
@@ -52,5 +53,13 @@ public class Column {
 
   public void setComment(String comment) {
     this.comment = comment;
+  }
+
+  public boolean isPrimaryKey() {
+    return isPrimaryKey;
+  }
+
+  public void setPrimaryKey(boolean primaryKey) {
+    isPrimaryKey = primaryKey;
   }
 }

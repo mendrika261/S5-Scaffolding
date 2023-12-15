@@ -8,6 +8,7 @@ public class ScAttribute {
   private String name;
   private String langType;
   private String mappingType;
+  private boolean isPrimaryKey;
 
 
   // Constructors
@@ -69,5 +70,13 @@ public class ScAttribute {
 
   public void setMappingType(String mappingType) {
     this.mappingType = mappingType;
+  }
+
+  public boolean isPrimaryKey() {
+    return isPrimaryKey;
+  }
+
+  public void setPrimaryKey(boolean primaryKey) {
+    isPrimaryKey = primaryKey;
   }
 }

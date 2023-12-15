@@ -16,7 +16,7 @@ $public $class #class#RestController ${
     @AutoWired
     private final #class#Service #className#Service;
 
-    @PostMapping("#className#s/")
+    @PostMapping("#className#s")
     $public $void create(@ModelAttribute #class# #className#) {
         #className#Service.create(#className#);
     }

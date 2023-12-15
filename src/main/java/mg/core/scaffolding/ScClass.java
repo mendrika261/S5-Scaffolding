@@ -14,22 +14,26 @@ import mg.database.Table;
 
 
 public class ScClass {
+  private Table table;
   private String packageName;
   private List<String> imports = new ArrayList<>();
   private String name;
   private List<ScAttribute> attributes = new ArrayList<>();
   private LangData langData;
   private String language;
+  private Database database;
 
   // Constructors
   public ScClass() {
   }
 
   public ScClass(String language, Table table, Database database) {
-    setName(table.getName());
+    setTable(table);
+    setName(getTable().getName());
     setLanguage(language);
+    setDatabase(database);
 
-    for (Column column : table.getColumns()) {
+    for (Column column : getTable().getColumns()) {
       final DbMapping map = database.getDbData().getMappedType(column.getType());
       final LangMapping langMap = getLangData().getMappedType(map.getMappingType());
       ScAttribute scAttribute = new ScAttribute();
@@ -37,6 +41,7 @@ public class ScClass {
       scAttribute.setLangType(langMap.getEquivalentType());
       scAttribute.setMappingType(map.getMappingType());
       scAttribute.setImportName(langMap.getImportPackage());
+      scAttribute.setPrimaryKey(column.isPrimaryKey());
       addAttributes(scAttribute);
     }
   }
@@ -133,6 +138,9 @@ public class ScClass {
     template = template.replace("#class#", getNameCamelCase());
     template = template.replace("#attributes#", attributesToCode());
     template = template.replace("#getters_and_setters#", withGettersAndSetters ? gettersAndSettersToCode() : "");
+    template = template.replace("#idType#",
+                    getLangData().getMappedType(getDatabase().getDbData()
+                            .getMappedType(getTable().getPrimaryKey().getType()).getMappingType()).getMappingType());
 
     return evaluate(template).trim();
   }
@@ -195,5 +203,21 @@ public class ScClass {
 
   public void setLanguage(String language) {
     this.language = language;
+  }
+
+  public Table getTable() {
+    return table;
+  }
+
+  public void setTable(Table table) {
+    this.table = table;
+  }
+
+  public Database getDatabase() {
+    return database;
+  }
+
+  public void setDatabase(Database database) {
+    this.database = database;
   }
 }
