@@ -8,7 +8,7 @@ import mg.core.Utils;
 public class LangData {
   private String extension;
   private List<String> preImported;
-  private HashMap<String, String> templates;
+  private List<Template> templates;
   private HashMap<String, String> traductions;
   private List<LangMapping> mappings;
 
@@ -28,10 +28,12 @@ public class LangData {
     throw new RuntimeException("Traduction not found for key: " + key);
   }
 
-  public String getTemplate(String key) {
-    if (getTemplates().containsKey(key))
-      return getTemplates().get(key);
-    throw new RuntimeException("Template not found for key: " + key);
+  public String getTemplateFile(String key) {
+    for(Template template: getTemplates()) {
+      if(template.getTemplateFile().equalsIgnoreCase(key))
+        return template.getTemplateFile();
+    }
+    throw new RuntimeException("Template not found for name: " + key);
   }
 
   public LangMapping getMappedType(String map) {
@@ -61,11 +63,11 @@ public class LangData {
     this.preImported = preImported;
   }
 
-  public HashMap<String, String> getTemplates() {
+  public List<Template> getTemplates() {
     return templates;
   }
 
-  public void setTemplates(HashMap<String, String> templates) {
+  public void setTemplates(List<Template> templates) {
     this.templates = templates;
   }
 

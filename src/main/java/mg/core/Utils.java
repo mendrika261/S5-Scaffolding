@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import mg.core.data.LangData;
+import mg.core.data.Template;
 import mg.exception.ScaffoldingException;
 
 public class Utils {
@@ -161,9 +162,9 @@ public class Utils {
     }
   }
 
-  public static String[] getAvailableTemplates(String langage) {
+  public static Template[] getAvailableTemplates(String langage) {
     LangData langData = LangData.getLangData(DATA_LANG_PATH + langage + ".json");
-    return langData.getTemplates().keySet().toArray(new String[0]);
+    return langData.getTemplates().toArray(new Template[0]);
   }
 
   public static boolean isInteger(String numberString) {

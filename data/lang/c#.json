@@ -3,11 +3,13 @@
   "preImported": [
     "System"
   ],
-  "templates": {
-    "class": "class.template",
-    "rest_controller": "c#/rest_controller.template",
-    "rest_controller_crud": "c#/rest_controller_crud.template"
-  },
+  "templates": [
+    {
+      "name": "Class",
+      "templateFile": "class.template",
+      "engine": "class"
+    }
+  ],
   "traductions": {
     "{": "{",
     "}": "}",

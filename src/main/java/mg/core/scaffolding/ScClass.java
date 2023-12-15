@@ -7,6 +7,7 @@ import mg.core.Utils;
 import mg.core.data.DbMapping;
 import mg.core.data.LangData;
 import mg.core.data.LangMapping;
+import mg.core.data.Template;
 import mg.database.Column;
 import mg.database.Database;
 import mg.database.Table;
@@ -125,7 +126,7 @@ public class ScClass {
   public String convert(String templateConversion, boolean withGettersAndSetters) {
     String template =
         Utils.readFile(Utils.DATA_TEMPLATES_PATH +
-                       getLangData().getTemplate(templateConversion));
+                       getLangData().getTemplateFile(templateConversion));
 
     template = template.replace("#package#", packageToCode());
     template = template.replace("#imports#", importsToCode());
@@ -136,14 +137,17 @@ public class ScClass {
     return evaluate(template).trim();
   }
 
-  public void generate(String path, String packageName, String templateConversion, boolean withGettersAndSetters) {
-    setPackageName(packageName);
-    path = Utils.getCorrectPath(path);
-    Utils.writeFile(path + getNameCamelCase() + getLangData().getExtension(),
-                    convert(templateConversion, withGettersAndSetters));
+  public String getFileName() {
+    return getNameCamelCase() + getLangData().getExtension();
   }
 
-  public void generate(String path, String templateConversion, boolean withGettersAndSetters) {
+  public void generate(String path, String packageName, Template templateConversion, boolean withGettersAndSetters) {
+    setPackageName(packageName);
+    path = Utils.getCorrectPath(path);
+    Utils.writeFile(path + getFileName(), convert(templateConversion.getTemplateFile(), withGettersAndSetters));
+  }
+
+  public void generate(String path, Template templateConversion, boolean withGettersAndSetters) {
     generate(path, Utils.getPackageFromPath(path), templateConversion, withGettersAndSetters);
   }
 

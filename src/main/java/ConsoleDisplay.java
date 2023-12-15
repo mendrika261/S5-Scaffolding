@@ -1,5 +1,6 @@
 import mg.core.Generation;
 import mg.core.Utils;
+import mg.core.data.Template;
 import mg.database.Database;
 import mg.database.Table;
 
@@ -38,7 +39,7 @@ public class ConsoleDisplay {
       String langage = askForLangage(scanner);
 
       while(true) {
-        final String template = askForTemplate(langage, scanner);
+        final Template template = askForTemplate(langage, scanner);
         final String path = askForPath(scanner);
         final String packageName = askForPackageName(scanner, path);
         Table table = askForTable(scanner, database, connection);
@@ -147,14 +148,14 @@ public class ConsoleDisplay {
     return packageName;
   }
 
-  private static String askForTemplate(String langage, Scanner scanner) {
+  private static Template askForTemplate(String langage, Scanner scanner) {
     System.out.println(COLOR_GREEN + "*".repeat(50));
     System.out.println("What template do you want to use?");
     System.out.println(COLOR_RESET);
 
-    final String[] availableTemplates = Utils.getAvailableTemplates(langage);
+    final Template[] availableTemplates = Utils.getAvailableTemplates(langage);
     for (int i = 0; i < availableTemplates.length; i++) {
-      System.out.println((i + 1) + ". " + availableTemplates[i]);
+      System.out.println((i + 1) + ". " + availableTemplates[i].getName());
     }
 
     try {

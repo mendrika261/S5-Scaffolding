@@ -1,12 +1,18 @@
 {
   "extension": ".java",
   "preImported": ["java.lang"],
-  "templates": {
-    "class": "class.template",
-    "rest_controller_spring": "java/rest_controller_spring.template",
-    "rest_controller_crud_spring": "java/rest_controller_crud_spring.template",
-    "rest_controller_crud_weeby": "java/rest_controller_crud_weeby.template"
-  },
+  "templates": [
+    {
+      "name": "Class",
+      "templateFile": "class.template",
+      "engine": "class"
+    },
+    {
+      "name": "Spring rest controller",
+      "templateFile": "java/rest_controller_spring.template",
+      "engine": "rest_controller"
+    }
+  ],
   "traductions": {
     "{": "{",
     "}": "}",

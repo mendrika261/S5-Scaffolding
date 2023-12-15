@@ -1,5 +1,6 @@
 package mg.core;
 
+import mg.core.data.Template;
 import mg.core.scaffolding.ScClass;
 import mg.core.scaffolding.ScRestController;
 import mg.database.Database;
@@ -13,13 +14,13 @@ public class Generation {
     private String langage;
     private String path;
     private String packageName;
-    private String template;
+    private Template template;
     private Database database;
     private boolean gettersSetters;
     private Table table;
 
     // Constructors
-    public Generation(String langage, String path, String packageName, String template, Database database, boolean gettersSetters) {
+    public Generation(String langage, String path, String packageName, Template template, Database database, boolean gettersSetters) {
         setLangage(langage);
         setPath(path);
         setPackageName(packageName);
@@ -30,18 +31,18 @@ public class Generation {
 
     // Methods
     public void generate(Connection connection) {
-        if (getTemplate().startsWith("class")) {
+        if (getTemplate().getEngine().equals("class")) {
             if (getTable() == null)
                 generateAllClass(connection);
             else
                 generateClass(getTable());
-        } else if (getTemplate().startsWith("rest_controller")) {
+        } else if (getTemplate().getEngine().equals("rest_controller")) {
             if (getTable() == null)
                 generateAllRestController(connection);
             else
                 generateRestController(getTable());
         } else {
-            throw new ScaffoldingException("Template not found: " + getTemplate());
+            throw new ScaffoldingException("Template engine not found: " + getTemplate().getEngine());
         }
     }
 
@@ -76,11 +77,11 @@ public class Generation {
         this.database = database;
     }
 
-    public String getTemplate() {
+    public Template getTemplate() {
         return template;
     }
 
-    public void setTemplate(String template) {
+    public void setTemplate(Template template) {
         this.template = template;
     }
 
