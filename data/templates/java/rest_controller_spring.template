@@ -17,7 +17,8 @@ $public $class #class#RestController ${
     private final #class#Service #className#Service;
 
     @PostMapping("#className#s")
-    $public $void create(@ModelAttribute #class# #className#) {
+    $public $void create(@ModelAttribute #class
+    # #className#) {
         #className#Service.create(#className#);
     }
 

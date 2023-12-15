@@ -85,7 +85,7 @@ public class ConsoleDisplay {
 
   private static String askForLangage(Scanner scanner) {
     System.out.println(COLOR_GREEN + "*".repeat(50));
-    System.out.println("What language do you want to generate the class in?");
+    System.out.println("Which language do you want to generate ?");
     System.out.println(COLOR_RESET);
 
     final String[] availableLanguages = Utils.getAvailableLanguages();
@@ -108,7 +108,7 @@ public class ConsoleDisplay {
 
   private static String askForPath(Scanner scanner) {
     System.out.println(COLOR_GREEN + "*".repeat(50));
-    System.out.println("Where do you want to generate the class?");
+    System.out.println("Where do you want to generate the file?");
     System.out.println(COLOR_RESET);
 
     System.out.print(COLOR_CYAN + "Enter the path (leave blank for current directory): "+ COLOR_RESET);
@@ -131,7 +131,7 @@ public class ConsoleDisplay {
     System.out.println("What is the package name?");
     System.out.println(COLOR_RESET);
 
-    System.out.print(COLOR_CYAN + "Enter the package name (leave blank if you want to make package same as path): "+ COLOR_RESET);
+    System.out.print(COLOR_CYAN + "Enter the package name (leave blank if you want to make path as package): "+ COLOR_RESET);
     String packageName = scanner.nextLine();
     try {
       if(packageName.isEmpty())
@@ -150,7 +150,7 @@ public class ConsoleDisplay {
 
   private static Template askForTemplate(String langage, Scanner scanner) {
     System.out.println(COLOR_GREEN + "*".repeat(50));
-    System.out.println("What template do you want to use?");
+    System.out.println("Which template do you want to use?");
     System.out.println(COLOR_RESET);
 
     final Template[] availableTemplates = Utils.getAvailableTemplates(langage);

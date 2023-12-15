@@ -1,6 +1,8 @@
+#namespace#
+
 using Microsoft.AspNetCore.Mvc;
 
-#namespace#
+#imports#
 
 [ApiController]
 [Route("[#className#s]")]
