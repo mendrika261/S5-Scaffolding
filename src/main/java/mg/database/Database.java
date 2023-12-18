@@ -7,6 +7,7 @@ import java.util.List;
 import mg.core.data.DbData;
 import mg.core.Utils;
 import mg.core.scaffolding.ScClass;
+import mg.core.scaffolding.ScRestController;
 import mg.exception.DatabaseException;
 import mg.exception.ScaffoldingException;
 
@@ -78,6 +79,8 @@ public class Database {
     }
   }
 
+
+
   public Table getTable(String name, Connection connection) {
     Table table = new Table();
     table.setName(name);
@@ -87,6 +90,7 @@ public class Database {
       ResultSet resultSet = connection.getMetaData().getColumns(null, SCHEMA, name, null);
       while (resultSet.next()) {
         Column column = new Column();
+        column.setPrimaryKey(resultSet.isFirst());
         column.setName(resultSet.getString("COLUMN_NAME"));
         column.setType(resultSet.getString("TYPE_NAME"));
         column.setNullable(resultSet.getBoolean("NULLABLE"));
@@ -100,47 +104,6 @@ public class Database {
     } catch (SQLException e) {
       throw new DatabaseException("Error getting table: " + e.getMessage());
     }
-  }
-
-  public void generateClass(String langage, Table table, String path, String packageName, String template, boolean gettersSetters) {
-    new ScClass(langage, table, this).generate(path, packageName, template, gettersSetters);
-  }
-
-  public void generateClass(String langage, Table table, String path, String template, boolean gettersSetters) {
-    generateClass(langage, table, path, path, template, gettersSetters);
-  }
-
-  public void generateClass(String langage, String path, String packageName, String template, boolean gettersSetters) {
-    try {
-      Connection connection = getConnection();
-      generateClass(langage, path, packageName, template, gettersSetters, connection);
-      connection.close();
-    } catch (SQLException e) {
-      throw new DatabaseException("Error getting connection from the database: " + e.getMessage());
-    }
-  }
-
-  public void generateClass(String langage, String path, String packageName, String template, boolean gettersSetters, Connection connection) {
-    for (Table table: getTables(connection))
-      try {
-        generateClass(langage, table, path, packageName, template, gettersSetters);
-      } catch (Exception e) {
-        throw new ScaffoldingException("Error generating class for table " + table.getName() + ": " + e.getMessage());
-      }
-  }
-
-  public void generateClass(String langage, String path, String template, boolean gettersSetters) {
-    try {
-      Connection connection = getConnection();
-      generateClass(langage, path, path, template, gettersSetters, connection);
-      connection.close();
-    } catch (SQLException e) {
-      throw new DatabaseException("Error getting connection from the database: " + e.getMessage());
-    }
-  }
-
-  public void generateClass(String langage, String path, String template, boolean gettersSetters, Connection connection) {
-    generateClass(langage, path, path, template, gettersSetters, connection);
   }
 
 

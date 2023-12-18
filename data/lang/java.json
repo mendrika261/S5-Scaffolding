@@ -1,10 +1,23 @@
 {
   "extension": ".java",
   "preImported": ["java.lang"],
-  "templates": {
-    "class": "class.template",
-    "class_lombok": "class-java-lombok.template"
-  },
+  "templates": [
+    {
+      "name": "Class",
+      "templateFile": "class.template",
+      "engine": "class"
+    },
+    {
+      "name": "Spring rest controller",
+      "templateFile": "java/rest_controller_spring.template",
+      "engine": "rest_controller"
+    },
+    {
+      "name": "My framework rest controller",
+      "templateFile": "java/rest_controller_weeby.template",
+      "engine": "rest_controller"
+    }
+  ],
   "traductions": {
     "{": "{",
     "}": "}",

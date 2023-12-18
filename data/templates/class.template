@@ -2,9 +2,10 @@
 
 #imports#
 
-$class #class# ${
+$public $class #class# ${
 #attributes#
 
     $/* Getters and setters $*/
 #getters_and_setters#
+
 $}

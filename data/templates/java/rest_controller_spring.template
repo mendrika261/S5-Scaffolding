@@ -1,0 +1,43 @@
+#package#
+
+$import org.springframework.web.bind.annotation.RestController$end_line
+$import org.springframework.beans.factory.annotation.AutoWired$end_line
+$import org.springframework.web.bind.annotation.PostMapping$end_line
+$import org.springframework.web.bind.annotation.GetMapping$end_line
+$import org.springframework.web.bind.annotation.PutMapping$end_line
+$import org.springframework.web.bind.annotation.DeleteMapping$end_line
+$import org.springframework.web.bind.annotation.ModelAttribute$end_line
+$import org.springframework.web.bind.annotation.PathVariable$end_line
+
+#imports#
+
+@RestController
+$public $class #class#RestController ${
+    @AutoWired
+    $private $final #class#Service #className#Service$end_line
+
+    @PostMapping("#className#")
+    $public $void create(@ModelAttribute #class# #className#) ${
+        #className#Service.create(#className#)$end_line
+    $}
+
+    @GetMapping("#className#s")
+    $public #class# readAll() ${
+        return #className#Service.getAll()$end_line
+    $}
+
+    @GetMapping("#className#/$id}")
+    $public #class# read(@PathVariable("id") #idType# id) ${
+        return #className#Service.get(id)$end_line
+    $}
+
+    @PutMapping("#className#/{id}")
+    $public $void update(@ModelAttribute #class# #className#) ${
+        #className#Service.update(#className#)$end_line
+    $}
+
+    @DeleteMapping("#className#/{id}")
+    $public $void delete(@PathVariable("id") #idType# id) ${
+        #className#Service.delete(id)$end_line
+    $}
+$}
