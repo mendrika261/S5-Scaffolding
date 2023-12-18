@@ -8,6 +8,11 @@
       "name": "Class",
       "templateFile": "class.template",
       "engine": "class"
+    },
+    {
+      "name": "Rest controller",
+      "templateFile": "c#/rest_controller.template",
+      "engine": "rest_controller"
     }
   ],
   "traductions": {

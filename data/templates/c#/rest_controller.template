@@ -1,14 +1,14 @@
 #namespace#
 
-using Microsoft.AspNetCore.Mvc;
+$import Microsoft.AspNetCore.Mvc;
 
 #imports#
 
 [ApiController]
 [Route("[#className#s]")]
-public class #class#Controller : ControllerBase
+$public $class #class#Controller : ControllerBase
 {
-    private readonly #class#Service _#className#Service;
+    $private readonly #class#Service _#className#Service;
 
     public #class#Controller(#class#Service #className#Service)
     {

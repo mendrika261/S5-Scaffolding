@@ -11,6 +11,11 @@
       "name": "Spring rest controller",
       "templateFile": "java/rest_controller_spring.template",
       "engine": "rest_controller"
+    },
+    {
+      "name": "My framework rest controller",
+      "templateFile": "java/rest_controller_weeby.template",
+      "engine": "rest_controller"
     }
   ],
   "traductions": {
