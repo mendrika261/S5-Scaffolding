@@ -22,7 +22,7 @@ public class ConsoleDisplay {
   public final static String COLOR_RESET = "\u001B[0m";
 
   public static void main(String[] args) throws SQLException {
-    clearScreen();
+    printLogo();
 
     Scanner scanner = new Scanner(System.in);
 
@@ -42,13 +42,24 @@ public class ConsoleDisplay {
         final Template template = askForTemplate(langage, scanner);
         final String path = askForPath(scanner);
         final String packageName = askForPackageName(scanner, path);
-        Table table = askForTable(scanner, database, connection);
 
         System.out.println(COLOR_YELLOW + "Processing..." + COLOR_RESET);
         final Generation generation = new Generation(langage, path, packageName, template, database, true);
+
+        Table table = askForTable(scanner, database, connection);
         generation.setTable(table);
+
+        if (!generation.getTemplate().getEngine().equalsIgnoreCase("class")) {
+          String objectImport = askString("Give the object package (eg: mg.entity)", scanner, "");
+          generation.setObjectImport(objectImport);
+          String objectServiceImport = askString("Give the object service package (eg: mg.service)", scanner, "");
+          generation.setObjectServiceImport(objectServiceImport);
+        }
+
         generation.generate(connection);
-        System.out.println(COLOR_GREEN + "Done! 🍭" + COLOR_RESET);
+        System.out.println(COLOR_GREEN + "------------");
+        System.out.println("| Done! 🍭 |");
+        System.out.println("------------" + COLOR_RESET);
 
         System.out.println();
         System.out.println("Need something else?");
@@ -80,7 +91,6 @@ public class ConsoleDisplay {
     System.out.flush();
     System.out.print("\033[H\033[2J");
     System.out.flush();
-    printLogo();
   }
 
   private static String askForLangage(Scanner scanner) {
@@ -208,5 +218,13 @@ public class ConsoleDisplay {
       return askForTable(scanner, database, connection);
     }
     return tableTarget;
+  }
+
+  private static String askString(String question, Scanner scanner, String defaultValue) {
+    System.out.print(COLOR_CYAN + question + ": " + COLOR_RESET);
+    String value = scanner.nextLine();
+    if (value==null || value.isEmpty())
+      return defaultValue;
+    return value;
   }
 }

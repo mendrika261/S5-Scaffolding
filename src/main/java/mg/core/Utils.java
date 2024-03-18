@@ -12,7 +12,6 @@ import mg.exception.ScaffoldingException;
 
 public class Utils {
   public static final String WD_PATH = System.getProperty("user.dir") + "/";
-
   public static final String DATA_PATH = WD_PATH + "data/";
   public static final String DATA_DB_PATH = DATA_PATH + "db/";
   public static final String DATA_LANG_PATH = DATA_PATH + "lang/";

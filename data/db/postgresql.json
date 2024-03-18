@@ -1,11 +1,11 @@
 {
   "mappings": [
     {
-      "databaseType": ["varchar"],
+      "databaseType": ["varchar", "text"],
       "mappingType": "String"
     },
     {
-      "databaseType": ["int8", "int4", "int2"],
+      "databaseType": ["int8", "int4", "int2", "serial"],
       "mappingType": "Integer"
     },
     {

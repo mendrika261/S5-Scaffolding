@@ -81,7 +81,7 @@ public class ScClass {
   public String importsToCode() {
     final StringBuilder imports = new StringBuilder();
     for (String importName : getImports())
-      if (getLangData().getPreImported().stream().noneMatch(importName::startsWith))
+      if (!importName.isBlank() && getLangData().getPreImported().stream().noneMatch(importName::startsWith))
         imports.append(importToCode(importName));
     return imports.toString();
   }

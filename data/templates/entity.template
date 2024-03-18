@@ -1,5 +1,7 @@
 #package#
 #imports#
+
+$annotation_start$entity_annotation$annotation_end
 $public $class #class# ${
 #attributes#
 

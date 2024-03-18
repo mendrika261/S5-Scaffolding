@@ -5,13 +5,13 @@
   ],
   "templates": [
     {
-      "name": "Class",
-      "templateFile": "class.template",
-      "engine": "class"
+      "name": "Entity",
+      "templateFile": "entity.template",
+      "engine": "entity"
     },
     {
-      "name": "Rest controller",
-      "templateFile": "c#/rest_controller.template",
+      "name": "Rest Controller",
+      "templateFile": "rest_controller.template",
       "engine": "rest_controller"
     }
   ],
@@ -23,13 +23,29 @@
     "/*": "/*",
     "*/": "*/",
     "package": "namespace",
-    "import": "use",
+    "import": "using",
     "return": "return",
     "class": "class",
     "this": "this",
     "public": "public",
     "private": "private",
-    "void": "void"
+    "void": "void",
+    "final": "readonly",
+    "attribute_name_prefix": "_",
+    "annotation_start": "[",
+    "annotation_end": "]",
+    "rest_annotation_import": "Microsoft.AspNetCore.Mvc",
+    "post_annotation": "HttpPost",
+    "get_annotation": "HttpGet",
+    "put_annotation": "HttpPut",
+    "delete_annotation": "HttpDelete",
+    "rest_controller_annotation": "ApiController",
+    "path_variable_annotation": "",
+    "request_body_annotation": "RequestBody",
+    "entity_annotation": "Table",
+    "entity_import_annotation": "System.ComponentModel.DataAnnotations.Schema",
+    "entity_id_annotation": "Key",
+    "entity_id_import_annotation": "System.ComponentModel.DataAnnotations"
   },
   "mappings": [
     {

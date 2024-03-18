@@ -28,10 +28,9 @@ $public $class #class#RestController ${
     $}
 
     @Url(url="/#className#",method="post")
-    $public $void create( ${
+    $public $void create() ${
          DbConnection dbConnection = DATABASE.getConnection()$end_line
          #class# #className# = new #class#()$end_line
-         $/* TODO $*/
          #className#.save()$end_line
          dbConnection.close()$end_line
     $}
@@ -40,7 +39,6 @@ $public $class #class#RestController ${
     $public $void update(#idType# id) ${
          DbConnection dbConnection = DATABASE.getConnection()$end_line
          #class# #className# = (#class#) new #class#().getById(id)$end_line
-         $/* TODO $*/
          #className#.save()$end_line
          dbConnection.close()$end_line
     $}
