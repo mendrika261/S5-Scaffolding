@@ -1,10 +1,7 @@
 package mg.core;
 
 import mg.core.data.Template;
-import mg.core.scaffolding.ScClass;
-import mg.core.scaffolding.ScEntity;
-import mg.core.scaffolding.ScRepository;
-import mg.core.scaffolding.ScRestController;
+import mg.core.scaffolding.*;
 import mg.database.Database;
 import mg.database.Table;
 import mg.exception.DatabaseException;
@@ -55,6 +52,11 @@ public class Generation {
                 generateAllRepository(connection);
             else
                 generateRepository(getTable());
+        } else if (getTemplate().getEngine().equals("service")) {
+            if (getTable() == null)
+                generateAllService(connection);
+            else
+                generateService(getTable());
         } else {
             throw new ScaffoldingException("Template engine not found: " + getTemplate().getEngine());
         }
@@ -101,6 +103,17 @@ public class Generation {
     public void generateAllRepository(Connection connection) {
         for (Table table : getDatabase().getTables(connection)) {
             generateRepository(table);
+        }
+    }
+
+    public void generateService(Table table) {
+        new ScService(getLangage(), table, getDatabase())
+                .generate(getPath(), getPackageName(), getTemplate(), haveGettersSetters());
+    }
+
+    public void generateAllService(Connection connection) {
+        for (Table table : getDatabase().getTables(connection)) {
+            generateService(table);
         }
     }
 

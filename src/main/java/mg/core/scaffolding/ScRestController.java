@@ -33,12 +33,6 @@ public class ScRestController extends ScClass {
     }
 
     @Override
-    public String convert(String templateConversion, boolean withGettersAndSetters) {
-        return super.convert(templateConversion, withGettersAndSetters)
-                .replace("#className#", getName().toLowerCase());
-    }
-
-    @Override
     public String getFileName() {
         return getNameCamelCase() + "RestController" + getLangData().getExtension();
     }

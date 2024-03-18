@@ -10,6 +10,11 @@
       "engine": "entity"
     },
     {
+      "name": "Service",
+      "templateFile": "c#/service.template",
+      "engine": "service"
+    },
+    {
       "name": "Rest Controller",
       "templateFile": "rest_controller.template",
       "engine": "rest_controller"
@@ -45,7 +50,8 @@
     "entity_annotation": "Table",
     "entity_import_annotation": "System.ComponentModel.DataAnnotations.Schema",
     "entity_id_annotation": "Key",
-    "entity_id_import_annotation": "System.ComponentModel.DataAnnotations"
+    "entity_id_import_annotation": "System.ComponentModel.DataAnnotations",
+    "service_import_annotation": "Microsoft.EntityFrameworkCore"
   },
   "mappings": [
     {

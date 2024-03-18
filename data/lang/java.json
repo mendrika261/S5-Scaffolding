@@ -13,6 +13,11 @@
       "engine": "repository"
     },
     {
+      "name": "Spring Service",
+      "templateFile": "java/service.template",
+      "engine": "service"
+    },
+    {
       "name": "Spring REST Controller",
       "templateFile": "rest_controller.template",
       "engine": "rest_controller"
@@ -59,8 +64,9 @@
     "repository_annotation": "Repository",
     "repository_import_annotation": "org.springframework.stereotype.Repository",
     "interface": "interface",
-    "extends": "extends"
-
+    "extends": "extends",
+    "service_annotation": "Service",
+    "service_import_annotation": "org.springframework.stereotype.Service"
   },
   "mappings": [
     {

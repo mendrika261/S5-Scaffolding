@@ -1,0 +1,44 @@
+#package#
+
+$import $service_import_annotation$end_line
+
+$public $class #class#Service ${
+    $private $final DbContext _context;
+
+    $public #class#Service(DbContext context)
+    {
+        _context = context;
+    }
+
+    $public void save(#class# #className#)
+    {
+        _context.#class#.Add(#className#);
+        _context.SaveChanges();
+    }
+
+    $public #class#[] readAll()
+    {
+        return _context.#class#.ToArray();
+    }
+
+    $public #class# read(#idType# id)
+    {
+        return _context.#class#.Find(id);
+    }
+
+    $public void update(#class# #className#, #idType# id)
+    {
+        _context.Entry(#className#).State = EntityState.Modified;
+        _context.SaveChanges();
+    }
+
+    $public void delete(#idType# id)
+    {
+        var #className# = _context.#class#.Find(id);
+        if (#className# != null)
+        {
+            _context.#class#.Remove(#className#);
+            _context.SaveChanges();
+        }
+    }
+$}

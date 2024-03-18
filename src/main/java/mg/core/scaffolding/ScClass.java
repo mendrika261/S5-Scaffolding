@@ -136,6 +136,7 @@ public class ScClass {
     template = template.replace("#package#", packageToCode());
     template = template.replace("#imports#", importsToCode());
     template = template.replace("#class#", getNameCamelCase());
+    template = template.replace("#className#", getName().toLowerCase());
     template = template.replace("#attributes#", attributesToCode());
     template = template.replace("#getters_and_setters#", withGettersAndSetters ? gettersAndSettersToCode() : "");
     template = template.replace("#idType#",
