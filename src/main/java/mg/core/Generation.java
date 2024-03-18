@@ -3,6 +3,7 @@ package mg.core;
 import mg.core.data.Template;
 import mg.core.scaffolding.ScClass;
 import mg.core.scaffolding.ScEntity;
+import mg.core.scaffolding.ScRepository;
 import mg.core.scaffolding.ScRestController;
 import mg.database.Database;
 import mg.database.Table;
@@ -49,13 +50,19 @@ public class Generation {
                 generateAllEntity(connection);
             else
                 generateEntity(getTable());
+        } else if (getTemplate().getEngine().equals("repository")) {
+            if (getTable() == null)
+                generateAllRepository(connection);
+            else
+                generateRepository(getTable());
         } else {
             throw new ScaffoldingException("Template engine not found: " + getTemplate().getEngine());
         }
     }
 
     public void generateClass(Table table) {
-        new ScClass(getLangage(), table, getDatabase()).generate(getPath(), getPackageName(), getTemplate(), haveGettersSetters());
+        new ScClass(getLangage(), table, getDatabase())
+                .generate(getPath(), getPackageName(), getTemplate(), haveGettersSetters());
     }
 
     public void generateAllClass(Connection connection) {
@@ -76,12 +83,24 @@ public class Generation {
     }
 
     public void generateEntity(Table table) {
-        new ScEntity(getLangage(), table, getDatabase()).generate(getPath(), getPackageName(), getTemplate(), haveGettersSetters());
+        new ScEntity(getLangage(), table, getDatabase())
+                .generate(getPath(), getPackageName(), getTemplate(), haveGettersSetters());
     }
 
     public void generateAllEntity(Connection connection) {
         for (Table table : getDatabase().getTables(connection)) {
             generateEntity(table);
+        }
+    }
+
+    public void generateRepository(Table table) {
+        new ScRepository(getLangage(), table, getDatabase())
+                .generate(getPath(), getPackageName(), getTemplate(), haveGettersSetters());
+    }
+
+    public void generateAllRepository(Connection connection) {
+        for (Table table : getDatabase().getTables(connection)) {
+            generateRepository(table);
         }
     }
 

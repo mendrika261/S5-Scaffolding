@@ -8,7 +8,12 @@
       "engine": "entity"
     },
     {
-      "name": "Spring Rest Controller",
+      "name": "Spring Repository",
+      "templateFile": "repository.template",
+      "engine": "repository"
+    },
+    {
+      "name": "Spring REST Controller",
       "templateFile": "rest_controller.template",
       "engine": "rest_controller"
     },
@@ -48,7 +53,14 @@
     "entity_annotation": "Entity",
     "entity_import_annotation": "jakarta.persistence.Entity",
     "entity_id_annotation": "Id",
-    "entity_id_import_annotation": "jakarta.persistence.Id"
+    "entity_id_import_annotation": "jakarta.persistence.Id",
+    "repository_extends": "JpaRepository",
+    "repository_import_extends": "org.springframework.data.jpa.repository.JpaRepository",
+    "repository_annotation": "Repository",
+    "repository_import_annotation": "org.springframework.stereotype.Repository",
+    "interface": "interface",
+    "extends": "extends"
+
   },
   "mappings": [
     {

@@ -1,0 +1,8 @@
+#package#
+
+$import $repository_import_annotation$end_line
+$import $repository_import_extends$end_line
+
+$annotation_start$repository_annotation$annotation_end
+$public $interface #class#Repository $extends $repository_extends<#class#, #idType#> ${
+$}
