@@ -36,6 +36,5 @@ build/
 
 ### Mac OS ###
 .DS_Store
-
-### Protect .env ###
-.env
+/dependency-reduced-pom.xml
+/test/

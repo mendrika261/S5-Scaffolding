@@ -1,0 +1,80 @@
+import { Component, OnInit } from '@angular/core';
+import { #ClassName# } from './#className#';
+import { #ClassName#Service } from './#className#.service';
+import {NgForOf, NgIf} from "@angular/common";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {FormsModule} from "@angular/forms";
+#depsImports#
+
+@Component({
+  selector: 'app-#className#s-form',
+  templateUrl: './#className#-form.component.html',
+  standalone: true,
+  imports: [
+    NgIf,
+    RouterLink,
+    FormsModule,
+    NgForOf
+  ],
+})
+export class #ClassName#FormComponent implements OnInit {
+  #className#: #ClassName# = {} as #ClassName#;
+  #className#Id: string | null = null;
+  error: string | null = null;
+  #FKtables#
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private #className#sService: #ClassName#Service,
+    #FKservices#
+  ) {}
+
+  ngOnInit(): void {
+    this.#className#Id = this.route.snapshot.paramMap.get('id');
+    if (this.#className#Id) {
+      this.getItem(this.#className#Id);
+    }
+    #FKgetters#
+  }
+
+  getItem(id: string): void {
+    this.#className#sService.get#ClassName#(id)
+      .subscribe({
+        next: #className# => {
+          this.#className# = #className#;
+        },
+        error: error => {
+          this.error = error.message;
+        }
+      });
+  }
+
+  onSubmit(): void {
+    this.error = null;
+
+    if (this.#className#Id) {
+      this.#className#sService.update#ClassName#s(this.#className#)
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/#className#s']).then(r => r);
+          },
+          error: error => {
+            this.error = error.message;
+          }
+        });
+    } else {
+      this.#className#sService.create#ClassName#s(this.#className#)
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/#className#s']).then(r => r);
+          },
+          error: error => {
+            this.error = error.message;
+          }
+        });
+    }
+  }
+
+
+  #FKgettersFunctions#
+}

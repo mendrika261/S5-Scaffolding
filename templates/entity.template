@@ -1,0 +1,11 @@
+#package#
+
+#imports#
+
+#class_annotation#
+$public $class #ClassName# #extends# ${
+#attributes#
+
+
+#getters_and_setters#
+$}

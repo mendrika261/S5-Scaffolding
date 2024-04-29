@@ -1,0 +1,38 @@
+#package#
+
+#imports#
+
+#class_annotation#
+$public $class #ClassName#RestController ${
+    #datasource#
+
+    #save_annotation#
+    $public $void save(#request_body_annotation# #ClassName# #className#) #throws# ${
+        #save_process#
+    $}
+
+    #read_all_annotation#
+    $public #ClassName#[] readAll() #throws# ${
+        #read_all_process#
+    $}
+    
+    #read_all_annotation_pagination#
+    public #ClassName#[] readAllPg(Integer limit, Integer page) throws DaoException {
+        #read_all_pagination_process#
+    }
+
+    #read_annotation#
+    $public #ClassName# read(#path_variable_annotation# #primaryKeyType# id) #throws# ${
+        #read_process#
+    $}
+
+    #update_annotation#
+    $public $void update(#request_body_annotation# #ClassName# #className#, #path_variable_annotation# #primaryKeyType# id) #throws# ${
+        #update_process#
+    $}
+
+    #delete_annotation#
+    $public $void delete(#path_variable_annotation# #primaryKeyType# id) #throws# ${
+        #delete_process#
+    $}
+$}

@@ -1,0 +1,32 @@
+#package#
+
+#imports#
+
+#class_annotation#
+$public $class #ClassName#Service ${
+    $private $final #ClassName#Repository #className#Repository$end_line
+
+    $public #ClassName#Service(#ClassName#Repository #className#Repository) ${
+        $this$.#className#Repository = #className#Repository$end_line
+    $}
+
+    $public $void save(#ClassName# #className#) ${
+        #className#Repository$.save(#className#)$end_line
+    $}
+
+    $public #ClassName#[] readAll() ${
+        $return #className#Repository$.findAll()$.toArray(#ClassName#[]::new)$end_line
+    $}
+
+    $public #ClassName# read(#primaryKeyType# id) ${
+        $return #className#Repository$.findById(id)$.orElse(null)$end_line
+    $}
+
+    $public $void update(#ClassName# #className#, #primaryKeyType# id) ${
+        #className#Repository$.save(#className#)$end_line
+    $}
+
+    $public $void delete(#primaryKeyType# id) ${
+        #className#Repository$.deleteById(id)$end_line
+    $}
+$}
