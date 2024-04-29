@@ -1,0 +1,21 @@
+import {Routes} from "@angular/router";
+
+export const #className#_routes: Routes = [
+  {
+    path: '', loadComponent: () =>
+      import('./#className#-list.component').then(m => m.#ClassName#ListComponent)
+  },
+  {
+    path: 'new', loadComponent: () =>
+      import('./#className#-form.component').then(m => m.#ClassName#FormComponent)
+  },
+  {
+    path: ':id', loadComponent: () =>
+      import('./#className#-form.component').then(m => m.#ClassName#FormComponent)
+  },
+  {
+    path: '#className#/:id', loadComponent: () =>
+      import('./#className#-list.component').then(m => m.#ClassName#ListComponent)
+  }
+  //** end of #className#s routes */
+];

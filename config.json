@@ -1,0 +1,370 @@
+{
+  "providers": {
+    "postgresql":{
+      "driver": "org.postgresql.Driver",
+      "mappings": {
+        "varchar": "string",
+        "int4": "integer",
+        "int2": "integer",
+        "date": "date",
+        "float4": "double",
+        "real": "double",
+        "bool": "boolean",
+        "serial": "integer",
+        "default": "string"
+      }
+    }
+  },
+  "databases": {
+    "default": {
+      "provider": "postgresql",
+      "host": "localhost",
+      "port": "5432",
+      "database": "testscaf",
+      "user": "mendrika261",
+      "password": ""
+    }
+  },
+  "languages": {
+    "java": {
+      "extension": "java",
+      "interface": "interface",
+      "package": "package",
+      "public": "public",
+      "class": "class",
+      "{": "{",
+      "}": "}",
+      ".": ".",
+      "this": "this",
+      "final": "final",
+      "private": "private",
+      "end_line": ";",
+      "return": "return",
+      "void": "void",
+      "#package#": "$package #packageName#$end_line",
+      "#import#": "import #importName#$end_line\n",
+      "annotation_start": "@",
+      "annotation_end": "",
+      "attribute_name_prefix": "",
+      "#attribute#": "\t$private #type# #name#$end_line\n",
+      "#getter#": "\tpublic #type# get#Name#() {\n\t\treturn #name#$end_line\n\t}\n",
+      "#getter_boolean#": "\tpublic #type# is#Name#() {\n\t\treturn #name#$end_line\n\t}\n",
+      "#setter#": "\tpublic void set#Name#(#type# #name#) {\n\t\tthis.#name# = #name#$end_line\n\t}\n"
+    },
+    "typescript": {
+      "extension": "ts",
+      "package": "module",
+      "public": "public",
+      "class": "class",
+      "{": "{",
+      "}": "}",
+      ".": ".",
+      "this": "this",
+      "final": "readonly",
+      "private": "private",
+      "end_line": ";",
+      "return": "return",
+      "void": "void",
+      "#package#": "export module #packageName# {",
+      "#import#": "import { #importName# } from '#importPath#';\n",
+      "annotation_start": "",
+      "annotation_end": "",
+      "attribute_name_prefix": "",
+      "#attribute#": "\t#name#: #type#$end_line\n",
+      "#getter#": "\tpublic get #name#(): #type# {\n\t\treturn this.#name#$end_line\n\t}",
+      "#getter_boolean#": "\tpublic get #name#(): #type# {\n\t\treturn this.#name#$end_line\n\t}",
+      "#setter#": "\tpublic set #name#(#name#: #type#) {\n\t\tthis.#name# = #name#$end_line\n\t}",
+      "export": "export",
+      "interface": "interface"
+    },
+    "html": {
+      "extension": "html",
+      "#column#": "\t\t\t\t<th>#name#</th>\n",
+      "#attribute#": "\t\t\t\t<td>{{#className#.#name#}}</td>\n",
+      "#attributeFK#": "\t\t\t\t<td><button [routerLink]=\"['/#FKtablename#s/#FKtablename#',#className#.#name#]\" class=\"btn btn-sm btn-primary\">{{#className#.#name#}} <i class=\"fas fa-link\"></i></button></td>\n"
+
+    }
+  },
+  "mappings": {
+    "java": {
+      "string": {
+        "type": "String"
+      },
+      "integer": {
+        "type": "Integer"
+      },
+      "date": {
+        "type": "LocalDate",
+        "toImport": "java.time.LocalDate"
+      },
+      "double": {
+        "type": "Double"
+      },
+      "default": {
+        "type": "String"
+      }
+    },
+    "typescript": {
+      "string": {
+        "type": "string"
+      },
+      "integer": {
+        "type": "number"
+      },
+      "date": {
+        "type": "Date",
+        "toImport": "Date"
+      },
+      "double": {
+        "type": "number"
+      },
+      "default": {
+        "type": "string"
+      }
+    },
+    "html": {
+      "string": {
+        "type": "text"
+      },
+      "integer": {
+        "type": "number"
+      },
+      "date": {
+        "type": "date"
+      },
+      "double": {
+        "type": "number"
+      },
+      "default": {
+        "type": "text"
+      }
+    }
+  },
+  "templatePath": "templates/",
+  "generations": {
+    "spring": {
+      "entity": {
+        "name": "Entity",
+        "default_package": "entity",
+        "engine": "mg.itu.generator.Entity",
+        "template": "entity.template",
+        "language": "java",
+        "file_name": "#Name#.#extension#",
+        "class_import_annotation": "jakarta.persistence.Entity",
+        "#class_annotation#": "$annotation_startEntity$annotation_end",
+        "primary_attribute_import_annotation": "jakarta.persistence.Id",
+        "#primary_attribute_annotation#": "\t$annotation_startId$annotation_end\n",
+        "primary_auto_generated_import_annotation": "jakarta.persistence.GeneratedValue,jakarta.persistence.GenerationType",
+        "#primary_auto_generated_annotation#": "\t$annotation_startGeneratedValue(strategy = GenerationType.AUTO)$annotation_end\n"
+      },
+      "repository": {
+        "name": "Repository",
+        "default_package": "repository",
+        "engine": "mg.itu.generator.Repository",
+        "template": "java/repository.template",
+        "language": "java",
+        "file_name": "#Name#Repository.#extension#",
+        "entity_package": "entity",
+        "#entity_name#": "#ClassName#",
+        "class_import_annotation": "org.springframework.stereotype.Repository",
+        "#class_annotation#": "$annotation_startRepository$annotation_end",
+        "extends_import": "org.springframework.data.jpa.repository.JpaRepository",
+        "#extends#": "extends JpaRepository<#ClassName#, #primaryKeyType#>"
+      },
+      "service": {
+        "name": "Service",
+        "default_package": "service",
+        "engine": "mg.itu.generator.Service",
+        "template": "java/service.template",
+        "language": "java",
+        "file_name": "#Name#Service.#extension#",
+        "entity_package": "entity",
+        "#entity_name#": "#ClassName#",
+        "repository_package": "repository",
+        "#repository_name#": "#ClassName#Repository",
+        "class_import_annotation": "org.springframework.stereotype.Service",
+        "#class_annotation#": "$annotation_startService$annotation_end"
+      },
+      "controller": {
+        "name": "Rest Controller",
+        "default_package": "controller",
+        "engine": "mg.itu.generator.Controller",
+        "template": "controller.template",
+        "language": "java",
+        "file_name": "#Name#RestController.#extension#",
+        "entity_package": "entity",
+        "#entity_name#": "#ClassName#",
+        "service_package": "service",
+        "#service_name#": "#ClassName#Service",
+        "class_import_annotation": "org.springframework.web.bind.annotation.RestController",
+        "#class_annotation#": "$annotation_startRestController$annotation_end",
+        "request_body_import_annotation": "org.springframework.web.bind.annotation.RequestBody",
+        "#request_body_annotation#": "$annotation_startRequestBody$annotation_end",
+        "path_variable_import_annotation": "org.springframework.web.bind.annotation.PathVariable",
+        "#path_variable_annotation#": "$annotation_startPathVariable$annotation_end",
+        "import": "org.springframework.web.bind.annotation.GetMapping,org.springframework.web.bind.annotation.PostMapping,org.springframework.web.bind.annotation.PutMapping,org.springframework.web.bind.annotation.DeleteMapping",
+        "#save_annotation#": "$annotation_startPostMapping(\"/#className#s\")$annotation_end",
+        "#read_all_annotation#": "$annotation_startGetMapping(\"/#className#s\")$annotation_end",
+        "#read_all_annotation_pagination#": "$annotation_startGetMapping(\"/#className#s\")$annotation_end",
+        "#read_annotation#": "$annotation_startGetMapping(\"/#className#s/{id}\")$annotation_end",
+        "#update_annotation#": "$annotation_startPutMapping(\"/#className#s/{id}\")$annotation_end",
+        "#delete_annotation#": "$annotation_startDeleteMapping(\"/#className#s/{id}\")$annotation_end",
+        "#save_process#": "$attribute_name_prefix#className#Service.save(#className#)$end_line",
+        "#read_all_process#": "$return $attribute_name_prefix#className#Service.readAll()$end_line",
+        "#read_all_pagination_process#": "$return $attribute_name_prefix#className#Service.readAll()$end_line",
+        "#read_process#": "$return $attribute_name_prefix#className#Service.read(id)$end_line",
+        "#update_process#": "$attribute_name_prefix#className#Service.update(#className#, id)$end_line",
+        "#delete_process#": "$attribute_name_prefix#className#Service.delete(id)$end_line",
+        "#datasource#": "$private $final #ClassName#Service $attribute_name_prefix#className#Service;\n\n\t$public #ClassName#RestController(#ClassName#Service #className#Service) ${\n\t\t$this.$attribute_name_prefix#className#Service = #className#Service$end_line\n\t$}",
+        "#throws#": ""
+      }
+    },
+    "framework": {
+      "entity": {
+        "name": "Entity",
+        "default_package": "entity",
+        "engine": "mg.itu.generator.Entity",
+        "template": "entity.template",
+        "language": "java",
+        "file_name": "#Name#.#extension#",
+        "class_import_annotation": "mg.uniDao.annotation.Collection",
+        "#class_annotation#": "$annotation_startCollection$annotation_end",
+        "extends_import": "mg.uniDao.core.sql.GenericSqlDao",
+        "#extends#": "extends GenericSqlDao",
+        "primary_auto_generated_import_annotation": "mg.uniDao.annotation.AutoSequence",
+        "#primary_auto_generated_annotation#": "\t$annotation_startAutoSequence(name = \"#className#\")$annotation_end\n",
+        "primary_attribute_import_annotation": "mg.uniDao.annotation.Field",
+        "#primary_attribute_annotation#": "\t$annotation_startField(name = \"#column_name#\", isPrimaryKey = true)$annotation_end\n",
+        "attribute_import_annotation": "mg.uniDao.annotation.Field",
+        "#attribute_annotation#": "\t$annotation_startField(name = \"#column_name#\")$annotation_end\n"
+      },
+      "controller": {
+        "name": "Rest Controller",
+        "default_package": "controller",
+        "engine": "mg.itu.generator.Controller",
+        "template": "controller.template",
+        "language": "java",
+        "file_name": "#Name#RestController.#extension#",
+        "entity_package": "entity",
+        "#entity_name#": "#ClassName#",
+        "request_body_import_annotation": "etu2024.framework.annotation.JsonObject",
+        "#request_body_annotation#": "$annotation_startJsonObject$annotation_end",
+        "#path_variable_annotation#": "",
+        "import": "etu2024.framework.annotation.Url,etu2024.framework.annotation.RestAPI,etu2024.framework.utility.Mapping",
+        "#save_annotation#": "$annotation_startUrl(url=\"/#className#s\", method=Mapping.POST)$annotation_end\n\t@RestAPI",
+        "#read_all_annotation#": "$annotation_startUrl(url=\"/#className#s\")$annotation_end\n\t@RestAPI",
+        "#read_all_annotation_pagination#": "$annotation_startUrl(url=\"/#className#s/{page}/{limit}\")$annotation_end\n\t@RestAPI",
+        "#read_annotation#": "$annotation_startUrl(url=\"/#className#s/{id}\")$annotation_end\n\t@RestAPI",
+        "#update_annotation#": "$annotation_startUrl(url=\"/#className#s/{id}\", method=Mapping.PUT)$annotation_end\n\t@RestAPI",
+        "#delete_annotation#": "$annotation_startUrl(url=\"/#className#s/{id}\", method=Mapping.DELETE)$annotation_end\n\t@RestAPI",
+        "datasource_import": "mg.uniDao.core.Database,mg.uniDao.exception.DaoException,mg.uniDao.provider.GenericSqlProvider,mg.uniDao.core.Service",
+        "#save_process#": "Service service = database.connect();\n\t\t#className#.save(service);\n\t\tservice.endConnection();",
+        "#read_all_process#": "Service service = database.connect();\n\n\t\t#ClassName#[] #className#s = new #ClassName#().getList(service).toArray(new #ClassName#[0]);\n\t\tservice.endConnection();\n\n\t\treturn #className#s;",
+        "#read_all_pagination_process#": "Service service = database.connect();\n\t\t#ClassName#[] #className#s = new #ClassName#().getList(service, page, limit).toArray(new #ClassName#[0]);\n\t\tservice.endConnection();\n\t\treturn #className#s;",
+        "#read_process#": "Service service = database.connect();\n\n\t\t#ClassName# #className# = new #ClassName#().getById(service, id);\n\t\tservice.endConnection();\n\n\t\treturn #className#;",
+        "#update_process#": "Service service = database.connect();\n\t\tdatabase.updateById(service, #className#, id);\n\t\tservice.endConnection();",
+        "#delete_process#": "Service service = database.connect();\n\t\tdatabase.deleteById(service, #ClassName#.class, id);\n\t\tservice.endConnection();",
+        "#datasource#": "private final Database database;\n\n\tpublic #ClassName#RestController() throws DaoException {\n\t\tdatabase = GenericSqlProvider.get();\n\t}",
+        "#throws#": "throws DaoException"
+      }
+    },
+    "angular": {
+      "service":{
+        "name": "Service",
+        "engine": "mg.itu.generator.view.Service",
+        "default_package": "#className#",
+        "template": "view/service.template",
+        "language": "typescript",
+        "file_name": "#name#.service.#extension#",
+        "class_import_annotation": "",
+        "#class_annotation#": ""
+      },
+      "interface": {
+        "name": "Interface",
+        "engine": "mg.itu.generator.Entity",
+        "default_package": "#className#",
+        "template": "view/interface.template",
+        "language": "typescript",
+        "file_name": "#name#.#extension#"
+      },
+      "list-component": {
+        "name": "List Component",
+        "engine": "mg.itu.generator.Entity",
+        "default_package": "#className#",
+        "template": "view/list-component.template",
+        "language": "typescript",
+        "file_name": "#name#-list.component.#extension#",
+        "service_package": "service",
+        "#service_name#": "#ClassName#Service",
+        "class_import_annotation": "",
+        "#class_annotation#": ""
+      },
+      "list-component-html": {
+        "name": "List Component HTML",
+        "engine": "mg.itu.generator.view.ListComponentHtml",
+        "default_package": "#className#",
+        "template": "view/list-component-html.template",
+        "language": "html",
+        "file_name": "#name#-list.component.#extension#"
+      },
+      "form-component": {
+        "name": "Form Component",
+        "engine": "mg.itu.generator.view.FormComponent",
+        "default_package": "#className#",
+        "template": "view/form-component.template",
+        "language": "typescript",
+        "file_name": "#name#-form.component.#extension#",
+        "service_package": "service",
+        "#service_name#": "#ClassName#Service",
+        "class_import_annotation": "",
+        "#class_annotation#": "",
+        "#FKtable#":"#FKname#s:#FKtype#[]=[];\n",
+        "interface_path": "../#FKname#/#FKname#",
+        "#FKservice#": "private #FKname#sService: #FKtype#Service,\n",
+        "service_path":"../#FKname#/#FKname#.service",
+        "service_suffix":"Service",
+        "#FKgettersFunction#": "get#FKtype#s():void\n{\n this.#FKname#s#service_suffix#.get#FKtype#s().subscribe( {\n next: (#FKname#s)=>{this.#FKname#s=#FKname#s;},error:error=>{\n this.error=error.message;\n}\n});\n}\n",
+        "#FKgetter#": "this.get#FKtype#s();\n"
+      },
+      "form-component-html": {
+        "name": "Form Component HTML",
+        "engine": "mg.itu.generator.view.FormComponentHtml",
+        "default_package": "#className#",
+        "template": "view/form-component-html.template",
+        "language": "html",
+        "file_name": "#name#-form.component.#extension#",
+        "#input#":"\t\t\t\t\t<div class=\"form-group row\">\n\t\t\t\t\t\t\t<label class=\"col-sm-3 mb-3 mb-sm-0 \">#Name#:</label>\n\t\t\t\t\t\t\t<input type=\"#type#\" class=\"form-control col-9\" [(ngModel)]=\"#className#.#name#\" name=\"#name#\" placeholder=\"#Name#\">\n\t\t\t\t\t</div>\n",
+        "#select#":"\t\t\t\t\t<div class=\"form-group row\">\n\t\t\t\t\t\t\t<label class=\"col-sm-3 mb-3 mb-sm-0 \">#Name#:</label>\n\t\t\t\t\t\t\t<select [(ngModel)]=\"#tabname#.#FKColumnName#\" name=\"#FKColumnName#\" id=\"\" class=\"form-control  col-9\" >\n\t\t\t\t\t\t\t\t<option value=\"\" disabled selected>Choisissez une option</option>\n#options#\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t</div> ",
+        "#options#":"\t\t\t\t\t\t\t\t<option value=\"{{#FKname#.#FKprimaryKey#}}\"  *ngFor=\"let #FKname# of #FKname#s\" >{{#FKname#.#FKdescription#}}</option>\n",
+        "#request#": "select * from #tabname#"
+      },
+      "routes": {
+        "name": "Route",
+        "engine": "mg.itu.generator.Entity",
+        "default_package": "#className#",
+        "template": "view/routes.template",
+        "language": "typescript",
+        "file_name": "#name#.routes.#extension#"
+      },
+      "router": {
+        "name": "Routeur principal",
+        "engine": "mg.itu.generator.view.Router",
+        "template": "view/router.template",
+        "language": "typescript",
+        "file_name": "app.routes.#extension#",
+        "#import_path#": "./#name#/#name#.routes",
+        "#import_name#": "#name#_routes",
+        "#path#": "{\n\tpath: '#name#s',\n\tchildren: #name#_routes\n\t},\n"
+      },
+      "menu": {
+        "name": "Menu",
+        "engine": "mg.itu.generator.view.MenuComponentHtml",
+        "template": "view/menu.template",
+        "language": "typescript",
+        "file_name": "menu.component.html",
+        "#menu#": "<li class=\"nav-item\">\n\t<a class=\"nav-link\" href=\"#url#\">\n\t<i class=\"fas fa-fw fa-toolbox\"></i>\n\t<span>#Name#</span></a>\n</li>\n",
+        "#url#": "/#name#s"
+      }
+    }
+  }
+}

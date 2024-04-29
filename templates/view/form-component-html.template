@@ -1,0 +1,21 @@
+<div *ngIf="error">
+  Erreur: {{ error }}
+</div>
+
+<div class="col-lg-12">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Formulaire de #ClassName#</h6>
+        </div>
+        <div class="card-body">
+            <form class="user" (ngSubmit)="onSubmit()">
+                #attributes#
+
+                <button type="submit" class="btn btn-primary btn-user">
+                       Enregistrer
+                       <i class="fas fa-save"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

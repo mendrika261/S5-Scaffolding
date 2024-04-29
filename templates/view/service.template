@@ -1,0 +1,34 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { #ClassName# } from "./#className#";
+import {API_URL} from "../app.component";
+
+@Injectable({ providedIn: 'root' })
+export class #ClassName#Service {
+  constructor(private http: HttpClient) {}
+
+  get#ClassName#s(): Observable<#ClassName#[]> {
+    return this.http.get<#ClassName#[]>(`$${API_URL}/#className#s`);
+  }
+
+  get#ClassName#sPagination(pageSize: number, pageNumber: number): Observable<#ClassName#[]> {
+    return this.http.get<#ClassName#[]>(`$${API_URL}/#className#s/$${pageSize}/$${pageNumber}`);
+  }
+
+  get#ClassName#(id: string): Observable<#ClassName#> {
+    return this.http.get<#ClassName#>(`$${API_URL}/#className#s/$${id}`);
+  }
+
+  create#ClassName#s(item: #ClassName#): Observable<#ClassName#> {
+    return this.http.post<#ClassName#>(`$${API_URL}/#className#s`, item);
+  }
+
+  update#ClassName#s(item: #ClassName#): Observable<#ClassName#> {
+    return this.http.put<#ClassName#>(`$${API_URL}/#className#s/$${item.#primaryKeyName#}`, item);
+  }
+
+  delete#ClassName#s(id: #primaryKeyType#): Observable<void> {
+    return this.http.delete<void>(`$${API_URL}/#className#s/$${id}`);
+  }
+}

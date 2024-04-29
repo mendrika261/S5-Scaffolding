@@ -1,0 +1,7 @@
+#package#
+
+#imports#
+
+#class_annotation#
+$public $interface #ClassName#Repository #extends# ${
+$}

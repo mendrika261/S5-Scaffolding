@@ -1,0 +1,137 @@
+import { Component, OnInit } from '@angular/core';
+import { #ClassName# } from './#className#';
+import { #ClassName#Service } from './#className#.service';
+import {NgFor, NgIf} from "@angular/common";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {FormsModule} from "@angular/forms";
+
+
+@Component({
+  selector: 'app-#className#s-list',
+  templateUrl: './#className#-list.component.html',
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    RouterLink,
+    FormsModule
+  ],
+})
+export class #ClassName#ListComponent implements OnInit {
+  #className#s: #ClassName#[] = [];
+  isLoading = false;
+  error: string | null = null;
+  #primaryKeyName#:string | null = null;
+  pageNumber:number=1;
+  pageSize:number=5;
+
+  constructor(private route: ActivatedRoute,
+                            private router: Router,private #className#sService: #ClassName#Service) {}
+
+  ngOnInit(): void {
+    this.#primaryKeyName# = this.route.snapshot.paramMap.get('id');
+    this.setPageSize(this.pageSize);
+    this.get#ClassName#sPagination();
+  }
+
+  get#ClassName#s(): void {
+    this.isLoading = true;
+    this.error = null;
+    if(this.#primaryKeyName#)
+        {
+          this.#className#sService.get#ClassName#(this.#primaryKeyName#)
+                .subscribe({
+                  next: #className# => {
+                    this.#className#s = [#className#];
+                    this.isLoading = false;
+                  },
+                  error: error => {
+                    this.error = error.message;
+                    this.isLoading = false;
+                  }
+                });
+        }
+        else
+        {
+            this.#className#sService.get#ClassName#s()
+                            .subscribe({
+                              next: #className#s => {
+                                this.#className#s = #className#s;
+                                this.isLoading = false;
+                              },
+                              error: error => {
+                                this.error = error.message;
+                                this.isLoading = false;
+                              }
+                            });
+        }
+
+  }
+
+  get#ClassName#sPagination(): void {
+    this.isLoading = true;
+    this.error = null;
+    if(this.#primaryKeyName#)
+    {
+      this.#className#sService.get#ClassName#(this.#primaryKeyName#)
+        .subscribe({
+          next: #className# => {
+            this.#className#s = [#className#];
+            this.isLoading = false;
+          },
+          error: error => {
+            this.error = error.message;
+            this.isLoading = false;
+          }
+        });
+    }
+    else
+    {
+      this.#className#sService.get#ClassName#sPagination(this.pageSize, this.pageNumber)
+        .subscribe({
+          next: #className#s => {
+            this.#className#s = #className#s;
+            this.isLoading = false;
+          },
+          error: error => {
+            this.error = error.message;
+            this.isLoading = false;
+          }
+        });
+    }
+  }
+
+  setPageSize(nbr: number): void {
+    this.pageSize = nbr;
+    this.get#ClassName#sPagination();
+  }
+
+  nextPage(): void {
+    this.pageNumber = this.pageNumber + 1;
+    this.get#ClassName#sPagination();
+  }
+
+  previousPage(): void {
+    this.pageNumber = this.pageNumber - 1;
+    this.get#ClassName#sPagination();
+  }
+
+  delete#ClassName#(id: #primaryKeyType#): void {
+    if(!confirm('Voulez vous vraiment supprimer ce #className#?'))
+      return;
+
+    this.isLoading = true;
+    this.error = null;
+
+    this.#className#sService.delete#ClassName#s(id)
+      .subscribe({
+        next: () => {
+          this.get#ClassName#s();
+        },
+        error: error => {
+          this.error = error.message;
+          this.isLoading = false;
+        }
+      });
+  }
+}
