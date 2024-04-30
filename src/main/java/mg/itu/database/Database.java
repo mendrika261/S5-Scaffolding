@@ -1,195 +1,162 @@
 package mg.itu.database;
 
-import mg.itu.display.Console;
-import org.apache.logging.log4j.Level;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import mg.itu.display.Console;
+import org.apache.logging.log4j.Level;
 
 public class Database {
-    private String provider;
-    private String host;
-    private String schema = "public";
-    private String port;
-    private String user;
-    private String password;
-    private String database;
-    private List<Table> tables;
+  private String provider;
+  private String host;
+  private String schema = "public";
+  private String port;
+  private String user;
+  private String password;
+  private String database;
+  private List<Table> tables;
 
-    public void init(Config config) {
-        final Provider provider = config.getProviders().get(getProvider());
-        Connection connection = getConnection(provider);
-        setTables(getTables(connection));
-        try {
-            connection.close();
-        } catch (SQLException ignored) {}
+  public void init(Config config) {
+    final Provider provider = config.getProviders().get(getProvider());
+    Connection connection = getConnection(provider);
+    setTables(getTables(connection));
+    try {
+      connection.close();
+    } catch (SQLException ignored) {
     }
+  }
 
-    public Connection getConnection(Provider provider) {
-        final String url = "jdbc:" + getProvider() + "://" + getHost() + ":" + getPort() +
-                "/" + getDatabase();
-        try {
-            Class.forName(provider.getDriver());
-            return DriverManager.getConnection(url, getUser(), getPassword());
-        } catch (Exception e) {
-            Console.LOGGER.log(Level.ERROR, e.getMessage());
-            return null;
-        }
+  public Connection getConnection(Provider provider) {
+    final String url = "jdbc:" + getProvider() + "://" + getHost() + ":" +
+                       getPort() + "/" + getDatabase();
+    try {
+      Class.forName(provider.getDriver());
+      return DriverManager.getConnection(url, getUser(), getPassword());
+    } catch (Exception e) {
+      Console.LOGGER.log(Level.ERROR, e.getMessage());
+      return null;
     }
+  }
 
-    public String getForeignKey(Connection connection,String column, String tab) throws SQLException {
-        ResultSet resultSet=connection.getMetaData().getImportedKeys(connection.getCatalog(), getSchema(), tab);
-        while (resultSet.next())
-        {
-            String columnName = resultSet.getString("PKCOLUMN_NAME");
-            if(columnName.equals(column))
-            {
-                return resultSet.getString("PKTABLE_NAME");
-            }
-        }
-        return null;
+  public String getForeignKey(Connection connection, String column, String tab)
+      throws SQLException {
+    ResultSet resultSet = connection.getMetaData().getImportedKeys(
+        connection.getCatalog(), getSchema(), tab);
+    while (resultSet.next()) {
+      String columnName = resultSet.getString("PKCOLUMN_NAME");
+      if (columnName.equals(column)) {
+        return resultSet.getString("PKTABLE_NAME");
+      }
     }
+    return null;
+  }
 
-    public Table getTableForeignKey(String collumn,Connection connection,String tableName) throws SQLException {
-        Table table=null;
-        ResultSet set=connection.getMetaData().getImportedKeys(connection.getCatalog(),getSchema(),tableName);
-        while (set.next())
-        {
-            String columnName = set.getString("FKCOLUMN_NAME");
-            String name=set.getString("PKTABLE_NAME");
-            if(columnName.equals(collumn))
-            {
-                table=getTable(name,connection);
-                return table;
-            }
-        }
+  public Table getTableForeignKey(String collumn, Connection connection,
+                                  String tableName) throws SQLException {
+    Table table = null;
+    ResultSet set = connection.getMetaData().getImportedKeys(
+        connection.getCatalog(), getSchema(), tableName);
+    while (set.next()) {
+      String columnName = set.getString("FKCOLUMN_NAME");
+      String name = set.getString("PKTABLE_NAME");
+      if (columnName.equals(collumn)) {
+        table = getTable(name, connection);
         return table;
+      }
+    }
+    return table;
+  }
+
+  public Table getTable(String name, Connection connection) {
+    final Table table = new Table();
+    table.setName(name);
+    final List<Column> columns = new ArrayList<>();
+
+    try {
+      final ResultSet resultSet =
+          connection.getMetaData().getColumns(null, getSchema(), name, null);
+      while (resultSet.next()) {
+        final Column column = new Column();
+        column.setPrimaryKey(resultSet.isFirst());
+        column.setName(resultSet.getString("COLUMN_NAME"));
+        column.setType(resultSet.getString("TYPE_NAME"));
+        column.setNullable(resultSet.getBoolean("NULLABLE"));
+        column.setDefaultValue(resultSet.getString("COLUMN_DEF"));
+        column.setComment(resultSet.getString("REMARKS"));
+        String fk = getForeignKey(connection, column.getName(), name);
+        if (fk != null) {
+          column.setForeignKey(true);
+          column.setTableName(fk);
+        }
+        columns.add(column);
+      }
+      table.setColumns(columns);
+      resultSet.close();
+    } catch (SQLException ignored) {
     }
 
-    public Table getTable(String name, Connection connection) {
-        final Table table = new Table();
-        table.setName(name);
-        final List<Column> columns = new ArrayList<>();
+    return table;
+  }
 
-        try {
-            final ResultSet resultSet = connection.getMetaData()
-                    .getColumns(null, getSchema(), name, null);
-            while (resultSet.next()) {
-                final Column column = new Column();
-                column.setPrimaryKey(resultSet.isFirst());
-                column.setName(resultSet.getString("COLUMN_NAME"));
-                column.setType(resultSet.getString("TYPE_NAME"));
-                column.setNullable(resultSet.getBoolean("NULLABLE"));
-                column.setDefaultValue(resultSet.getString("COLUMN_DEF"));
-                column.setComment(resultSet.getString("REMARKS"));
-                String fk = getForeignKey(connection, column.getName(), name);
-                if(fk != null)
-                {
-                    column.setForeignKey(true);
-                    column.setTableName(fk);
-                }
-                columns.add(column);
-            }
-            table.setColumns(columns);
-            resultSet.close();
-        } catch (SQLException ignored) {}
+  public List<Table> getTables(Connection connection) {
+    final List<Table> tables = new ArrayList<>();
+    try {
+      final DatabaseMetaData databaseMetaData = connection.getMetaData();
+      final ResultSet resultSet = databaseMetaData.getTables(
+          null, getSchema(), null, new String[] {"TABLE", "VIEW"});
 
-        return table;
+      while (resultSet.next()) {
+        final Table table =
+            getTable(resultSet.getString("TABLE_NAME"), connection);
+        table.setMutable(resultSet.getString("TABLE_TYPE").equals("TABLE"));
+        tables.add(table);
+      }
+
+      resultSet.close();
+    } catch (SQLException ignored) {
     }
+    return tables;
+  }
 
-    public List<Table> getTables(Connection connection) {
-        final List<Table> tables = new ArrayList<>();
-        try {
-            final DatabaseMetaData databaseMetaData = connection.getMetaData();
-            final ResultSet resultSet = databaseMetaData
-                    .getTables(null, getSchema(), null, new String[]{"TABLE", "VIEW"});
+  // Getters and Setters
+  public String getProvider() { return provider; }
 
-            while (resultSet.next()) {
-                final Table table = getTable(resultSet.getString("TABLE_NAME"), connection);
-                table.setMutable(resultSet.getString("TABLE_TYPE").equals("TABLE"));
-                tables.add(table);
-            }
+  public void setProvider(String provider) { this.provider = provider; }
 
-            resultSet.close();
-        } catch (SQLException ignored) {}
-        return tables;
-    }
+  public String getSchema() { return schema; }
 
-    // Getters and Setters
-    public String getProvider() {
-        return provider;
-    }
+  public void setSchema(String schema) { this.schema = schema; }
 
-    public void setProvider(String provider) {
-        this.provider = provider;
-    }
+  public List<Table> getTables() { return tables; }
 
-    public String getSchema() {
-        return schema;
-    }
+  public void setTables(List<Table> tables) { this.tables = tables; }
 
-    public void setSchema(String schema) {
-        this.schema = schema;
-    }
+  public String getHost() { return host; }
 
-    public List<Table> getTables() {
-        return tables;
-    }
+  public void setHost(String host) { this.host = host; }
 
-    public void setTables(List<Table> tables) {
-        this.tables = tables;
-    }
+  public String getPort() { return port; }
 
-    public String getHost() {
-        return host;
-    }
+  public void setPort(String port) { this.port = port; }
 
-    public void setHost(String host) {
-        this.host = host;
-    }
+  public String getUser() { return user; }
 
-    public String getPort() {
-        return port;
-    }
+  public void setUser(String user) { this.user = user; }
 
-    public void setPort(String port) {
-        this.port = port;
-    }
+  public String getPassword() { return password; }
 
-    public String getUser() {
-        return user;
-    }
+  public void setPassword(String password) { this.password = password; }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
+  public String getDatabase() { return database; }
 
-    public String getPassword() {
-        return password;
-    }
+  public void setDatabase(String database) { this.database = database; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getDatabase() {
-        return database;
-    }
-
-    public void setDatabase(String database) {
-        this.database = database;
-    }
-
-    @Override
-    public String toString() {
-        return "Connexion{" +
-                "driver='" + getProvider() + '\'' +
-                ", host='" + getHost() + '\'' +
-                ", port='" + getPort() + '\'' +
-                ", user='" + getUser() + '\'' +
-                ", password='" + getPassword() + '\'' +
-                ", database='" + getDatabase() + '\'' +
-                '}';
-    }
+  @Override
+  public String toString() {
+    return "Connexion{"
+        + "driver='" + getProvider() + '\'' + ", host='" + getHost() + '\'' +
+        ", port='" + getPort() + '\'' + ", user='" + getUser() + '\'' +
+        ", password='" + getPassword() + '\'' + ", database='" + getDatabase() +
+        '\'' + '}';
+  }
 }

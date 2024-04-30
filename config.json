@@ -1,6 +1,6 @@
 {
   "providers": {
-    "postgresql":{
+    "postgresql": {
       "driver": "org.postgresql.Driver",
       "mappings": {
         "varchar": "string",
@@ -82,7 +82,6 @@
       "#column#": "\t\t\t\t<th>#name#</th>\n",
       "#attribute#": "\t\t\t\t<td>{{#className#.#name#}}</td>\n",
       "#attributeFK#": "\t\t\t\t<td><button [routerLink]=\"['/#FKtablename#s/#FKtablename#',#className#.#name#]\" class=\"btn btn-sm btn-primary\">{{#className#.#name#}} <i class=\"fas fa-link\"></i></button></td>\n"
-
     }
   },
   "mappings": {
@@ -269,7 +268,7 @@
       }
     },
     "angular": {
-      "service":{
+      "service": {
         "name": "Service",
         "engine": "mg.itu.generator.view.Service",
         "default_package": "#className#",
@@ -318,11 +317,11 @@
         "#service_name#": "#ClassName#Service",
         "class_import_annotation": "",
         "#class_annotation#": "",
-        "#FKtable#":"#FKname#s:#FKtype#[]=[];\n",
+        "#FKtable#": "#FKname#s:#FKtype#[]=[];\n",
         "interface_path": "../#FKname#/#FKname#",
         "#FKservice#": "private #FKname#sService: #FKtype#Service,\n",
-        "service_path":"../#FKname#/#FKname#.service",
-        "service_suffix":"Service",
+        "service_path": "../#FKname#/#FKname#.service",
+        "service_suffix": "Service",
         "#FKgettersFunction#": "get#FKtype#s():void\n{\n this.#FKname#s#service_suffix#.get#FKtype#s().subscribe( {\n next: (#FKname#s)=>{this.#FKname#s=#FKname#s;},error:error=>{\n this.error=error.message;\n}\n});\n}\n",
         "#FKgetter#": "this.get#FKtype#s();\n"
       },
@@ -333,9 +332,9 @@
         "template": "view/form-component-html.template",
         "language": "html",
         "file_name": "#name#-form.component.#extension#",
-        "#input#":"\t\t\t\t\t<div class=\"form-group row\">\n\t\t\t\t\t\t\t<label class=\"col-sm-3 mb-3 mb-sm-0 \">#Name#:</label>\n\t\t\t\t\t\t\t<input type=\"#type#\" class=\"form-control col-9\" [(ngModel)]=\"#className#.#name#\" name=\"#name#\" placeholder=\"#Name#\">\n\t\t\t\t\t</div>\n",
-        "#select#":"\t\t\t\t\t<div class=\"form-group row\">\n\t\t\t\t\t\t\t<label class=\"col-sm-3 mb-3 mb-sm-0 \">#Name#:</label>\n\t\t\t\t\t\t\t<select [(ngModel)]=\"#tabname#.#FKColumnName#\" name=\"#FKColumnName#\" id=\"\" class=\"form-control  col-9\" >\n\t\t\t\t\t\t\t\t<option value=\"\" disabled selected>Choisissez une option</option>\n#options#\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t</div> ",
-        "#options#":"\t\t\t\t\t\t\t\t<option value=\"{{#FKname#.#FKprimaryKey#}}\"  *ngFor=\"let #FKname# of #FKname#s\" >{{#FKname#.#FKdescription#}}</option>\n",
+        "#input#": "\t\t\t\t\t<div class=\"form-group row\">\n\t\t\t\t\t\t\t<label class=\"col-sm-3 mb-3 mb-sm-0 \">#Name#:</label>\n\t\t\t\t\t\t\t<input type=\"#type#\" class=\"form-control col-9\" [(ngModel)]=\"#className#.#name#\" name=\"#name#\" placeholder=\"#Name#\">\n\t\t\t\t\t</div>\n",
+        "#select#": "\t\t\t\t\t<div class=\"form-group row\">\n\t\t\t\t\t\t\t<label class=\"col-sm-3 mb-3 mb-sm-0 \">#Name#:</label>\n\t\t\t\t\t\t\t<select [(ngModel)]=\"#tabname#.#FKColumnName#\" name=\"#FKColumnName#\" id=\"\" class=\"form-control  col-9\" >\n\t\t\t\t\t\t\t\t<option value=\"\" disabled selected>Choisissez une option</option>\n#options#\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t</div> ",
+        "#options#": "\t\t\t\t\t\t\t\t<option value=\"{{#FKname#.#FKprimaryKey#}}\"  *ngFor=\"let #FKname# of #FKname#s\" >{{#FKname#.#FKdescription#}}</option>\n",
         "#request#": "select * from #tabname#"
       },
       "routes": {
