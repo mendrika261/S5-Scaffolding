@@ -8,4 +8,3 @@ CREATE TABLE territorie (
     territory_description character varying(60) NOT NULL,
     region_id integer NOT NULL REFERENCES region (region_id)
 );
-

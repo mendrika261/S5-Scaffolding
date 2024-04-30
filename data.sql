@@ -10125,4 +10125,3 @@ INSERT INTO us_states
 
 INSERT INTO us_states
     VALUES (51, 'Wyoming', 'WY', 'west');
-

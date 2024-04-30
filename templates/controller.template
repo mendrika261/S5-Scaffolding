@@ -15,7 +15,7 @@ $public $class #ClassName#RestController ${
     $public #ClassName#[] readAll() #throws# ${
         #read_all_process#
     $}
-    
+
     #read_all_annotation_pagination#
     public #ClassName#[] readAllPg(Integer limit, Integer page) throws DaoException {
         #read_all_pagination_process#
