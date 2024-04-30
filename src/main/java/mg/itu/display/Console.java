@@ -149,7 +149,7 @@ public class Console {
         System.out.println();
         System.out.println(COLOR_YELLOW + "Generating all components..." + COLOR_RESET);
         for (String component : config.getGenerations().get(app).keySet()) {
-            System.out.println("✅" + component);
+            System.out.println("✅ " + component);
             generate(config, app, component, packageName, tables, database, path);
         }
         System.out.println(COLOR_GREEN + "All components generated successfully!" + COLOR_RESET);
