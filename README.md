@@ -3,7 +3,7 @@
 Java CLI tool to scaffold a project with full CRUD from a database schema.
 It is based on a template, so you can customize and extend it with any language you want.
 
-
+> 🎉 It works now with [my web framework](https://github.com/mendrika261/S4-Java-Framework) and [unidao](https://github.com/mendrika261/S5-UniDao)
 
 https://github.com/mendrika261/S5-Scaffolding/assets/97053149/1d19fa53-c1ac-4739-ae98-088040ee4b78
 
